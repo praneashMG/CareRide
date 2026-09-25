@@ -1,0 +1,905 @@
+﻿    <!DOCTYPE html>
+    <html lang="en" dir="ltr" data-theme="light">
+    <head>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="assets/fav.png" type="image/jpeg">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <title>CareRide</title>
+
+    <script src="tailwind.js"></script>
+        <style>
+            /* --- Modern Professional Blue Palette --- */
+            :root, html[data-theme='light'] {
+                --color-background: #FFFFFF;
+                --color-primary-text: #1E293B; 
+                --color-secondary-text: #475569;
+                --color-accent: #2563EB; 
+                --color-accent-light: #EFF6FF; 
+                --color-border: #E2E8F0; 
+                --color-hover: #F8FAFC; 
+                --color-footer-bg: #0F172A;
+                --color-footer-text: #F1F5F9; 
+            }
+            html[data-theme='dark'] {
+                --color-background: #020617;
+                --color-primary-text: #F8FAFC;
+                --color-secondary-text: #94A3B8;
+                --color-accent: #3B82F6; 
+                --color-accent-light: #1E3A8A; 
+                --color-border: #1E293B; 
+                --color-hover: #0F172A;
+                --color-footer-bg: #020617;
+                --color-footer-text: #F8FAFC;
+            }
+            
+            body {
+                background-color: var(--color-background);
+                color: var(--color-primary-text);
+                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+                transition: background-color 0.3s, color 0.3s;
+                overflow-x: hidden;
+            }
+            
+            .text-primary-text { color: var(--color-primary-text); }
+            .text-secondary-text { color: var(--color-secondary-text); }
+            .text-accent { color: var(--color-accent); }
+            .text-accent-light { color: var(--color-accent-light); }
+            .bg-background { background-color: var(--color-background); }
+            .bg-hover { background-color: var(--color-hover); }
+        .bg-accent { background-color: var(--color-accent); }
+            .border-border { border-color: var(--color-border); }
+
+            /* ── Typography Weight System ── */
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 500 !important;
+            }
+            p, .text-secondary-text {
+                font-weight: 400 !important;
+            }
+
+            /* Rich Gradient */
+            .bg-custom-gradient {
+                background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+            }
+
+            #main-footer {
+                background-color: var(--color-footer-bg);
+                color: var(--color-footer-text);
+            }
+            #main-footer .footer-heading {
+                color: #3B82F6 !important; 
+            }
+            #main-footer .footer-link:hover {
+                color: #60A5FA;
+                padding-left: 4px;
+                transition: all 0.2s ease;
+            }
+
+            /* Nav Link */
+            .nav-link {
+                position: relative;
+                transition: color 0.3s;
+                padding: 0.5rem 0.5rem; /* Reduced horizontal padding */
+                font-weight: 600;
+            }
+            .nav-link:hover {
+                color: var(--color-accent) !important;
+            }
+
+            /* DROPDOWN */
+            .dropdown-wrapper { position: relative; }
+            .dropdown-menu {
+                position: absolute;
+                top: calc(100% + 5px);
+                left: 0;
+                background-color: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                min-width: 220px;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+            .dropdown-wrapper:hover .dropdown-menu {
+                opacity: 1; visibility: visible; transform: translateY(0);
+                display: block;
+            }
+            .dropdown-menu a {
+                display: block;
+                padding: 0.75rem 1rem;
+                color: var(--color-primary-text);
+                text-decoration: none;
+                font-size: 0.875rem;
+                transition: all 0.2s ease;
+                border-bottom: 1px solid var(--color-border);
+            }
+            .dropdown-menu a:last-child { border-bottom: none; }
+            .dropdown-menu a:hover {
+                background-color: var(--color-hover);
+                color: var(--color-accent);
+                padding-left: 1.25rem;
+            }
+
+            @media (max-width: 1024px) {
+                .dropdown-menu { position: static; display: none; opacity: 1; visibility: visible; transform: none; box-shadow: none; }
+                .dropdown-wrapper:hover .dropdown-menu { display: block; }
+            }
+
+            /* ── Canonical Button System ── */
+            .btn-primary, .book-btn {
+                background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+                color: white;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                text-align: center;
+                border: 2px solid transparent;
+            }
+            .btn-primary:hover, .book-btn:hover {
+                opacity: 0.88;
+                transform: scale(1.04);
+                box-shadow: 0 6px 18px rgba(59,130,246,0.3);
+            }
+            .btn-outline {
+                background: transparent;
+                color: var(--color-accent);
+                border: 2px solid var(--color-accent);
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                text-align: center;
+            }
+            .btn-outline:hover {
+                background: var(--color-accent);
+                color: white;
+                box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+            }
+            html[data-theme='dark'] .btn-outline {
+                color: #3B82F6;
+                border-color: #3B82F6;
+            }
+            html[data-theme='dark'] .btn-outline:hover {
+                background: #3B82F6;
+                color: #FFF;
+            }
+            .btn-cta-white {
+                background: white;
+                color: #2563EB;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            .btn-cta-white:hover {
+                background: #f3f4f6;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            }
+
+        </style>
+    </head>
+    <body class="antialiased flex flex-col min-h-screen">
+
+        <header class="fixed top-4 left-0 right-0 z-50 transition-all duration-300 shadow-md border border-border bg-background mx-auto w-[96%] xl:w-[96%] 2xl:w-[92%] max-w-[1600px] rounded-full" id="main-header">
+            <nav class="px-6 sm:px-8 xl:px-6 2xl:px-12 py-3 flex items-center justify-between h-[70px] relative">
+                <a href="index.html" class="text-3xl font-serif font-extrabold tracking-wide flex items-center gap-2 shrink-0">    
+                    <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                    <span class="text-accent">CareRide</span>
+                </a>
+
+                <!-- Centered Nav Links -->
+                <div class="hidden xl:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 w-max z-10">
+                    <div class="flex xl:space-x-1 2xl:space-x-3 rtl:space-x-reverse text-primary-text font-medium text-[14px] 2xl:text-[15px]">
+                        <div class="dropdown-wrapper">
+                            <button class="nav-link flex items-center" id="home-dropdown-btn">
+                                Home
+                                <svg class="w-3 h-3 ml-1 relative top-[2.5px] transition-transform duration-200 text-primary-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="index.html">Home 1</a>
+                                <a href="home2.html">Home 2</a>
+                            </div>
+                        </div>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="how-it-works.html" class="nav-link">How It Works</a>
+    <a href="drivers.html" class="nav-link">Drivers</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="dropdown-wrapper">
+                            <button class="nav-link flex items-center" id="dashboard-dropdown-btn">
+                                Dashboard
+                                <svg class="w-3 h-3 ml-1 relative top-[2.5px] transition-transform duration-200 text-primary-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="admin.html">Admin Dashboard</a>
+                                <a href="userdash.html">User Dashboard</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="hidden xl:flex items-center xl:space-x-2 2xl:space-x-4 rtl:space-x-reverse z-10 ml-auto">
+                    <div class="flex items-center xl:space-x-2 2xl:space-x-4 rtl:space-x-reverse">
+                        <button id="theme-toggle" class="icon-btn text-primary-text hover:text-accent p-2 rounded-xl bg-hover border border-border transition duration-200">
+                            <svg class="w-5 h-5 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg class="w-5 h-5 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        </button>
+                        <button id="lang-icon" class="text-primary-text hover:text-accent p-2 rounded-xl bg-hover border border-border transition duration-200">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+    </svg>                    </button>
+                        <div class="flex items-center xl:ml-2 rtl:xl:ml-0 rtl:xl:mr-2 2xl:ml-4 rtl:2xl:ml-0 rtl:2xl:mr-4">
+                            <a href="signup.html" class="book-btn w-14 h-14 rounded-full font-bold shadow-md flex items-center justify-center text-white hover:scale-105 transition-transform" title="Sign Up">
+                                <i class="fa-solid fa-user-plus text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xl:hidden flex items-center">
+                    <button id="mobile-menu-open" class="icon-btn text-primary-text hover:text-accent p-1.5 rounded-full"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow">
+<!-- SECTION 1 — HERO (Pricing Focus) -->
+    <!-- ================================================== -->
+    <section class="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden bg-background border-b border-border">
+        <!-- Decorative Background Gradients -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-accent-light opacity-60 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-blue-50 dark:bg-blue-900/20 opacity-60 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-border text-accent text-sm font-bold mb-8 shadow-sm">
+                <i class="fa-solid fa-tag"></i> Transparent & Upfront Pricing
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-text leading-tight mb-6">
+                Flexible Plans for Every <br class="hidden sm:block"/>
+                <span class="text-accent">Family's Needs</span>
+            </h1>
+            <p class="text-lg md:text-xl text-secondary-text mb-10 max-w-2xl mx-auto">
+                Whether you need a single ride to the doctor or a recurring schedule for ongoing treatments, we offer clear pricing with absolutely no hidden fees.
+            </p>
+            
+            <!-- Trust Badges -->
+            <div class="flex flex-wrap justify-center gap-6 mt-8 border-t border-border pt-8">
+                <div class="flex items-center gap-2 text-primary-text font-semibold">
+                    <i class="fa-solid fa-circle-check text-green-500"></i> No Surges
+                </div>
+                <div class="flex items-center gap-2 text-primary-text font-semibold">
+                    <i class="fa-solid fa-circle-check text-green-500"></i> Cancel Anytime
+                </div>
+                <div class="flex items-center gap-2 text-primary-text font-semibold">
+                    <i class="fa-solid fa-circle-check text-green-500"></i> Flat Rates Available
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- SECTION 2 — PRICING PLANS (Toggle Tabs) -->
+    <!-- ================================================== -->
+    <section class="py-16 lg:py-24 bg-hover border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Toggle Buttons (Using JS hooks provided in original template) -->
+            <div class="flex justify-center mb-12">
+                <div class="bg-background border border-border p-1 rounded-xl inline-flex shadow-sm">
+                    <button id="btn-monthly" class="bg-[#3B82F6] text-white shadow-lg px-8 py-3 rounded-lg font-bold text-sm transition-all duration-300">
+                        Pay-As-You-Go
+                    </button>
+                    <button id="btn-seasonal" class="text-primary-text px-8 py-3 rounded-lg font-bold text-sm hover:text-accent transition-all duration-300">
+                        Recurring Plans
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pay-As-You-Go Grid (Active by default) -->
+            <div id="monthly-plans" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Plan 1 -->
+                <div class="bg-card border border-border p-8 rounded-2xl shadow-sm hover:border-accent transition-colors flex flex-col relative overflow-hidden">
+                    <h3 class="text-2xl font-bold text-primary-text mb-2">Single One-Way</h3>
+                    <p class="text-secondary-text mb-6 text-sm">Perfect for simple drop-offs or hospital discharges.</p>
+                    <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                        $35 <span class="text-base font-normal text-secondary-text">/ trip</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> Up to 10 miles included
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> Door-through-door assist
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> Live family tracking
+                        </li>
+                    </ul>
+                    <a href="scheduling.html" class="btn-outline w-full text-center">Select Plan</a>
+                </div>
+
+                <!-- Plan 2 (Highlighted) -->
+                <div class="bg-card border-2 border-accent p-8 rounded-2xl shadow-lg relative flex flex-col transform lg:-translate-y-4 overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 bg-accent text-white py-1.5 text-center text-xs font-bold uppercase tracking-wider">
+                        Most Popular
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-2xl font-bold text-primary-text mb-2">Round-Trip Wait</h3>
+                        <p class="text-secondary-text mb-6 text-sm">Ideal for doctor appointments or routine errands.</p>
+                        <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                            $85 <span class="text-base font-normal text-secondary-text">/ trip</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Both ways included (20 miles)
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Up to 90 mins wait time
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Clinic check-in assistance
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Same driver for return
+                            </li>
+                        </ul>
+                        <a href="scheduling.html" class="btn-primary w-full text-center">Select Plan</a>
+                    </div>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="bg-card border border-border p-8 rounded-2xl shadow-sm hover:border-accent transition-colors flex flex-col relative overflow-hidden">
+                    <h3 class="text-2xl font-bold text-primary-text mb-2">Half-Day Block</h3>
+                    <p class="text-secondary-text mb-6 text-sm">Dedicated companion for multiple stops or long visits.</p>
+                    <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                        $150 <span class="text-base font-normal text-secondary-text">/ 4 hours</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> 4 hours continuous service
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> Unlimited local stops
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i> Full companion support
+                        </li>
+                    </ul>
+                    <a href="scheduling.html" class="btn-outline w-full text-center">Select Plan</a>
+                </div>
+            </div>
+
+            <!-- Recurring Plans Grid (Hidden by default) -->
+            <div id="seasonal-plans" class="hidden grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Recurring 1 -->
+                <div class="bg-card border border-border p-8 rounded-2xl shadow-sm hover:border-accent transition-colors flex flex-col relative overflow-hidden">
+                    <h3 class="text-2xl font-bold text-primary-text mb-2">Weekly Routine</h3>
+                    <p class="text-secondary-text mb-6 text-sm">For weekly therapy, dialysis, or church services.</p>
+                    <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                        $250 <span class="text-base font-normal text-secondary-text">/ month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> 4 Round-trips per month
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> Locked-in schedule
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> Same familiar driver
+                        </li>
+                    </ul>
+                    <a href="scheduling.html" class="btn-outline w-full text-center">Subscribe</a>
+                </div>
+
+                <!-- Recurring 2 (Highlighted) -->
+                <div class="bg-card border-2 border-accent p-8 rounded-2xl shadow-lg relative flex flex-col transform lg:-translate-y-4 overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 bg-accent text-white py-1.5 text-center text-xs font-bold uppercase tracking-wider">
+                        Best Value
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-2xl font-bold text-primary-text mb-2">Dialysis / Triple</h3>
+                        <p class="text-secondary-text mb-6 text-sm">Intensive schedule for 3x weekly treatments.</p>
+                        <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                            $650 <span class="text-base font-normal text-secondary-text">/ month</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-accent mt-1"></i> 12 Round-trips per month
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-accent mt-1"></i> Priority dispatch status
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-accent mt-1"></i> Dedicated care coordinator
+                            </li>
+                            <li class="flex items-start gap-3 text-secondary-text text-sm">
+                                <i class="fa-solid fa-check text-accent mt-1"></i> Flexible cancellation
+                            </li>
+                        </ul>
+                        <a href="scheduling.html" class="btn-primary w-full text-center">Subscribe</a>
+                    </div>
+                </div>
+
+                <!-- Recurring 3 -->
+                <div class="bg-card border border-border p-8 rounded-2xl shadow-sm hover:border-accent transition-colors flex flex-col relative overflow-hidden">
+                    <h3 class="text-2xl font-bold text-primary-text mb-2">Family Premium</h3>
+                    <p class="text-secondary-text mb-6 text-sm">Unlimited peace of mind for active seniors.</p>
+                    <div class="text-4xl font-bold text-primary-text mb-6 border-b border-border pb-6">
+                        $950 <span class="text-base font-normal text-secondary-text">/ month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> Up to 20 Round-trips
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> On-demand scheduling
+                        </li>
+                        <li class="flex items-start gap-3 text-secondary-text text-sm">
+                            <i class="fa-solid fa-check text-accent mt-1"></i> Includes all vehicle types
+                        </li>
+                    </ul>
+                    <a href="scheduling.html" class="btn-outline w-full text-center">Subscribe</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- SECTION 3 — VEHICLE & ADD-ON SURCHARGES -->
+    <!-- ================================================== -->
+    <section class="py-16 lg:py-24 bg-background border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-primary-text mb-4">Vehicle Types & Service Add-Ons</h2>
+                <p class="text-secondary-text text-lg">Our base rates include standard ambulatory sedan transport. Adjustments are made based on specialized medical needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Standard -->
+                <div class="bg-card p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-hover rounded-xl flex items-center justify-center text-primary-text text-xl">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-text">Ambulatory Sedan</h4>
+                            <p class="text-xs text-secondary-text">Standard Transport</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-accent">Included</span>
+                    </div>
+                </div>
+
+                <!-- Wheelchair -->
+                <div class="bg-card p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-accent text-xl">
+                            <i class="fa-brands fa-accessible-icon"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-text">Wheelchair Van</h4>
+                            <p class="text-xs text-secondary-text">ADA Lift & Securement</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-primary-text">+$30</span><br>
+                        <span class="text-xs text-secondary-text">per trip</span>
+                    </div>
+                </div>
+
+                <!-- Additional Distance -->
+                <div class="bg-card p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-hover rounded-xl flex items-center justify-center text-primary-text text-xl">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-text">Extra Mileage</h4>
+                            <p class="text-xs text-secondary-text">Beyond 10 base miles</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-primary-text">+$2.50</span><br>
+                        <span class="text-xs text-secondary-text">per mile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- SECTION 4 — WHAT'S ALWAYS INCLUDED (Value Prop) -->
+    <!-- ================================================== -->
+    <section class="py-16 lg:py-24 bg-hover border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-primary-text mb-4">Included in Every Ride</h2>
+                <p class="text-secondary-text text-lg">We don't nickel-and-dime for safety and compassion. These premium features are standard on every CareRide trip.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="flex flex-col">
+                    <i class="fa-solid fa-door-open text-3xl text-accent mb-4"></i>
+                    <h4 class="font-bold text-primary-text mb-2">Door-Through-Door</h4>
+                    <p class="text-sm text-secondary-text">We walk inside your home, help with coats, and escort you entirely inside your destination.</p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <i class="fa-solid fa-location-crosshairs text-3xl text-accent mb-4"></i>
+                    <h4 class="font-bold text-primary-text mb-2">Live GPS & SMS Alerts</h4>
+                    <p class="text-sm text-secondary-text">Family members receive automated text updates and live tracking links for every trip.</p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <i class="fa-solid fa-user-group text-3xl text-accent mb-4"></i>
+                    <h4 class="font-bold text-primary-text mb-2">Free Caregiver Ride-Along</h4>
+                    <p class="text-sm text-secondary-text">One family member, spouse, or private nurse is always welcome to ride along at zero extra cost.</p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <i class="fa-solid fa-shield-heart text-3xl text-accent mb-4"></i>
+                    <h4 class="font-bold text-primary-text mb-2">Certified Companions</h4>
+                    <p class="text-sm text-secondary-text">Every driver is CPR/First Aid certified, background-checked, and dementia-care trained.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- SECTION 5 — FAQ (Billing & Insurance) -->
+    <!-- ================================================== -->
+    <section class="py-16 lg:py-24 bg-background">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-primary-text mb-4">Billing & Insurance FAQ</h2>
+            </div>
+
+            <div class="space-y-6">
+                <!-- FAQ 1 -->
+                <div class="bg-card border border-border p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-primary-text mb-3">Does CareRide accept Medicare or Medicaid?</h3>
+                    <p class="text-secondary-text text-sm">
+                        CareRide is primarily a private-pay service. However, some Medicare Advantage (Part C) plans or Medicaid waivers cover Non-Emergency Medical Transportation. We provide detailed receipts that you can submit to your provider for reimbursement if you have eligible coverage.
+                    </p>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-card border border-border p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-primary-text mb-3">How does payment work for family members?</h3>
+                    <p class="text-secondary-text text-sm">
+                        Through the Family Dashboard, you can safely store a credit or debit card on file. Rides are automatically charged upon completion. You can also split billing between multiple family members (e.g., siblings sharing the cost of a parent's transport).
+                    </p>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-card border border-border p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-primary-text mb-3">What is your cancellation policy?</h3>
+                    <p class="text-secondary-text text-sm">
+                        We understand that medical appointments change. You can cancel any ride up to 12 hours in advance with absolutely no penalty. Cancellations made within 12 hours of the pickup time are subject to a 50% cancellation fee to compensate our drivers.
+                    </p>
+                </div>
+                
+                <!-- FAQ 4 -->
+                <div class="bg-card border border-border p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-primary-text mb-3">Do I need to tip the driver?</h3>
+                    <p class="text-secondary-text text-sm">
+                        CareRide is a fully cashless, no-tipping-required service. We pay our companions a premium living wage. If you wish to show extraordinary gratitude, you may add a tip through the app post-ride, but it is never expected or solicited.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- SECTION 6 — FINAL CTA -->
+    <!-- ================================================== -->
+    <section class="py-20 lg:py-28 bg-custom-gradient relative overflow-hidden text-center border-t border-border">
+        <!-- Decorative SVG overlay -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none flex justify-center items-center">
+            <i class="fa-solid fa-calculator text-[300px] text-white transform -rotate-12"></i>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Ready to set up your account?
+            </h2>
+            <p class="text-blue-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+                Create your free Family Profile to view exact rates for your specific addresses and medical needs. No credit card required to sign up.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="signup.html" class="btn-cta-white text-lg px-10 py-4 w-full sm:w-auto font-bold shadow-xl">
+                    Create Free Account
+                </a>
+                <a href="contact.html" class="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 hover:border-white transition-all duration-300 font-bold px-10 py-4 rounded-lg w-full sm:w-auto">
+                    Request Custom Quote
+                </a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+        <div id="mobile-menu-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
+            <div id="drawer-backdrop" class="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+            <div id="drawer-content" class="absolute top-0 left-0 right-0 bg-background rounded-b-2xl shadow-2xl p-6 xl:hidden max-h-[85vh] overflow-y-auto transform translate-y-[-100%] transition-transform duration-300 ease-out">
+                <div class="flex justify-between items-center pb-4 border-b border-border">
+                    <a href="index.html" class="text-2xl font-serif font-extrabold tracking-wide flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                        <span class="text-accent">CareRide</span>
+                    </a>
+                    <button id="mobile-menu-close" class="text-primary-text hover:text-accent"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                </div>
+                <nav class="flex flex-col space-y-2 py-4">
+                    <div>
+                        <button class="block text-primary-text font-semibold text-lg py-2 w-full text-left flex justify-between items-center" id="mobile-homes-toggle">
+                            Home <svg class="w-4 h-4 transform transition-transform duration-200 text-primary-text" id="homes-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="mobile-homes-menu" class="hidden pl-4 flex flex-col space-y-1 mt-1 border-l-2 border-border">
+                            <a href="index.html" class="block text-secondary-text hover:text-accent text-base py-1">Home 1</a>
+                            <a href="home2.html" class="block text-secondary-text hover:text-accent text-base py-1">Home 2</a>
+                        </div>
+                    </div>
+    <a href="services.html" class="block text-primary-text font-semibold text-lg py-2">Services</a>
+    <a href="how-it-works.html" class="block text-primary-text font-semibold text-lg py-2">How It Works</a>
+    <a href="drivers.html" class="block text-primary-text font-semibold text-lg py-2">Drivers</a>
+    <a href="pricing.html" class="block text-primary-text font-semibold text-lg py-2">Pricing</a>
+    <a href="about.html" class="block text-primary-text font-semibold text-lg py-2">About</a>
+    <a href="contact.html" class="block text-primary-text font-semibold text-lg py-2">Contact</a>
+    <!-- Dashboard Dropdown -->
+    <div>
+        <button class="block text-primary-text font-semibold text-lg py-2 w-full text-left flex justify-between items-center" id="mobile-dashboard-toggle">
+            Dashboard
+            <svg class="w-4 h-4 transform transition-transform duration-200" id="dashboard-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <div id="mobile-dashboard-menu" class="hidden pl-4 flex flex-col space-y-1 mt-1 border-l-2 border-border">
+            <a href="admin.html" class="block text-secondary-text hover:text-accent text-base py-1">Admin Dashboard</a>
+            <a href="userdash.html" class="block text-secondary-text hover:text-accent text-base py-1">User Dashboard</a>
+        </div>
+    </div>
+                </nav>
+                <div class="pt-4 border-t border-border mt-4 flex justify-around items-center">
+                    <button id="mobile-lang-icon-drawer" class="flex flex-col items-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+    </svg><span class="text-xs mt-1 text-secondary-text">RTL</span></button>
+                    <button id="drawer-theme-toggle" class="flex flex-col items-center">
+                        <svg class="w-6 h-6 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        <svg class="w-6 h-6 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                        <span class="text-xs mt-1 text-secondary-text">Theme</span>
+                    </button>
+                </div>
+                <div class="flex mt-5 gap-5 w-full">
+                    <a href="login.html" class="flex-1 btn-outline text-center py-1.5 rounded-xl font-bold text-sm shadow-md">Login</a>
+                    <a href="signup.html" class="flex-1 book-btn text-center py-2 rounded-xl font-bold text-sm shadow-md">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <footer id="main-footer" class="pt-20 transition-colors duration-300">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-gray-800">
+                    <div class="lg:col-span-2">
+                        <a href="index.html" class="text-3xl font-serif font-extrabold tracking-wide flex items-center gap-2 mb-4">    
+                            <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                            <span class="text-accent">CareRide</span>
+                        </a>
+    <p class="text-lg leading-relaxed max-w-sm !text-white-400">
+    Providing safe, reliable, and compassionate transportation services for seniors, ensuring peace of mind for families and stress-free medical rides.</p>                    <div class="flex gap-6 mt-10">
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="services.html" class="footer-link">Services</a></li>
+                            <li><a href="how-it-works.html" class="footer-link">How It Works</a></li>
+                            <li><a href="drivers.html" class="footer-link">Drivers</a></li>
+                            <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+                            <li><a href="about.html" class="footer-link">About</a></li>
+                            <li><a href="contact.html" class="footer-link">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Address</h4>
+                        <ul class="space-y-2 text-white/80">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-location-dot mt-1 text-accent text-center w-5"></i>
+                                <span>456 Wellness Boulevard,<br>Healthcare District, NY 10002</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-phone text-accent text-center w-5"></i>
+                                <a href="tel:+18005550199" class="footer-link">+1 (800) 555-0199</a>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-envelope text-accent text-center w-5"></i>
+                                <a href="mailto:contact@CareRide.com" class="footer-link">info@CareRide.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Dashboard</h4>
+                        <ul class="space-y-2">
+                            <li><a href="scheduling.html" class="footer-link">Ride Scheduling</a></li>
+                            <li><a href="tracking.html" class="footer-link">Driver Tracking</a></li>
+                            <li><a href="history.html" class="footer-link">Ride History</a></li>
+                            <li><a href="payments.html" class="footer-link">Payment Management</a></li>
+                            <li><a href="family-login.html" class="footer-link">Family Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="py-10 text-center text-white-500 text-sm">© 2026 CareRide . All rights reserved.</div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const html = document.documentElement;
+
+                // Drawer Control
+                const menuDrawer = document.getElementById('mobile-menu-drawer');
+                const menuContent = document.getElementById('drawer-content');
+                const menuBackdrop = document.getElementById('drawer-backdrop');
+
+                const openDrawer = () => {
+                    menuDrawer.classList.remove('pointer-events-none');
+                    menuContent.classList.remove('translate-y-[-100%]');
+                    menuBackdrop.classList.add('opacity-50', 'pointer-events-auto');
+                    document.body.style.overflow = 'hidden';
+                };
+                const closeDrawer = () => {
+                    menuContent.classList.add('translate-y-[-100%]');
+                    menuBackdrop.classList.remove('opacity-50', 'pointer-events-auto');
+                    setTimeout(() => { menuDrawer.classList.add('pointer-events-none'); document.body.style.overflow = ''; }, 300);
+                };
+
+                document.getElementById('mobile-menu-open').addEventListener('click', openDrawer);
+                document.getElementById('mobile-menu-close').addEventListener('click', closeDrawer);
+                menuBackdrop.addEventListener('click', closeDrawer);
+
+                // Accordions
+                const setupAccordion = (toggleId, menuId, iconId) => {
+                    const toggle = document.getElementById(toggleId);
+                    toggle?.addEventListener('click', () => {
+                        const menu = document.getElementById(menuId);
+                        const icon = document.getElementById(iconId);
+                        menu.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180');
+                    });
+                };
+                setupAccordion('mobile-homes-toggle', 'mobile-homes-menu', 'homes-icon');
+                setupAccordion('mobile-dashboard-toggle', 'mobile-dashboard-menu', 'dashboard-icon');
+
+
+                // Theme & RTL
+                const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('drawer-theme-toggle')];
+                const applyTheme = (theme) => {
+                    html.setAttribute('data-theme', theme);
+                    document.querySelectorAll('.light-icon').forEach(i => i.classList.toggle('hidden', theme === 'dark'));
+                    document.querySelectorAll('.dark-icon').forEach(i => i.classList.toggle('hidden', theme === 'light'));
+                };
+                themeToggles.forEach(btn => btn.addEventListener('click', () => {
+                    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', next);
+                    applyTheme(next);
+                }));
+                applyTheme(localStorage.getItem('theme') || 'light');
+
+                const langToggles = [document.getElementById('lang-icon'), document.getElementById('mobile-lang-icon-drawer')];
+                langToggles.forEach(btn => btn.addEventListener('click', () => {
+                    const current = localStorage.getItem('language') === 'ar' ? 'en' : 'ar';
+                    localStorage.setItem('language', current);
+                    html.setAttribute('dir', current === 'ar' ? 'rtl' : 'ltr');
+                }));
+                html.setAttribute('dir', localStorage.getItem('language') === 'ar' ? 'rtl' : 'ltr');
+
+                // Active Nav Logic
+                const setActiveNavLink = () => {
+                    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+                    
+                    // Desktop Links
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        if (link.getAttribute('href') === currentPath) {
+                            link.classList.add('active', 'text-accent', 'font-bold');
+                        } else {
+                            link.classList.remove('active', 'text-accent', 'font-bold');
+                        }
+                    });
+
+                    // Desktop Dropdowns
+                    if (['index.html', 'home2.html'].includes(currentPath)) {
+                        document.getElementById('home-dropdown-btn')?.classList.add('active', 'text-accent', 'font-bold');
+                    }
+                    if (['admin.html', 'userdash.html'].includes(currentPath)) {
+                        document.getElementById('dashboard-dropdown-btn')?.classList.add('active', 'text-accent', 'font-bold');
+                    }
+
+                    // Mobile Links
+                    document.querySelectorAll('#drawer-content a').forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === currentPath) {
+                            link.classList.add('text-accent', 'font-bold');
+                            link.classList.remove('text-primary-text', 'text-secondary-text');
+                        } else {
+                            if (link.closest('#mobile-homes-menu') || link.closest('#mobile-dashboard-menu')) {
+                                link.classList.add('text-secondary-text');
+                                link.classList.remove('text-accent', 'font-bold');
+                            } else {
+                                link.classList.add('text-primary-text');
+                                link.classList.remove('text-accent', 'font-bold');
+                            }
+                        }
+                    });
+
+                    // Mobile Toggles
+                    if (['index.html', 'home2.html'].includes(currentPath)) {
+                        document.getElementById('mobile-homes-toggle')?.classList.add('text-accent', 'font-bold');
+                    }
+                    if (['admin.html', 'userdash.html'].includes(currentPath)) {
+                        document.getElementById('mobile-dashboard-toggle')?.classList.add('text-accent', 'font-bold');
+                    }
+                };
+                setActiveNavLink();
+            });
+            document.addEventListener("DOMContentLoaded", function () {
+
+        const btnMonthly = document.getElementById("btn-monthly");
+        const btnSeasonal = document.getElementById("btn-seasonal");
+
+        const monthlyPlans = document.getElementById("monthly-plans");
+        const seasonalPlans = document.getElementById("seasonal-plans");
+
+        if (!btnMonthly || !btnSeasonal || !monthlyPlans || !seasonalPlans) return;
+
+        btnMonthly.addEventListener("click", function () {
+
+            btnMonthly.classList.add("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnMonthly.classList.remove("text-primary-text");
+
+            btnSeasonal.classList.remove("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnSeasonal.classList.add("text-primary-text");
+
+            monthlyPlans.classList.remove("hidden");
+            monthlyPlans.classList.add("grid");
+
+            seasonalPlans.classList.remove("grid");
+            seasonalPlans.classList.add("hidden");
+
+        });
+
+        btnSeasonal.addEventListener("click", function () {
+
+            btnSeasonal.classList.add("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnSeasonal.classList.remove("text-primary-text");
+
+            btnMonthly.classList.remove("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnMonthly.classList.add("text-primary-text");
+
+            seasonalPlans.classList.remove("hidden");
+            seasonalPlans.classList.add("grid");
+
+            monthlyPlans.classList.remove("grid");
+            monthlyPlans.classList.add("hidden");
+
+        });
+
+    });
+        </script>
+    </body>
+    </html>
+

@@ -1,0 +1,1059 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/fav.png" type="image/jpeg">
+    <title>CareRide · Family Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CareRide Color Engine (matches index.html palette) --- */
+        :root,
+        html[data-theme='light'] {
+            --color-background: #FFFFFF;
+            --color-primary-text: #1E293B;
+            --color-secondary-text: #475569;
+            --color-accent: #2563EB;
+            --color-accent-light: #EFF6FF;
+            --color-border: #E2E8F0;
+            --color-hover: #F8FAFC;
+            --color-footer-bg: #0F172A;
+            --color-footer-text: #F1F5F9;
+            --color-card-bg: #FFFFFF;
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-danger: #EF4444;
+            --color-info: #3B82F6;
+            --color-sidebar-bg: #FFFFFF;
+        }
+
+        html[data-theme='dark'] {
+            --color-background: #020617;
+            --color-primary-text: #F8FAFC;
+            --color-secondary-text: #94A3B8;
+            --color-accent: #3B82F6;
+            --color-accent-light: #1E3A8A;
+            --color-border: #1E293B;
+            --color-hover: #0F172A;
+            --color-footer-bg: #020617;
+            --color-footer-text: #F8FAFC;
+            --color-card-bg: #141414;
+            --color-success: #059669;
+            --color-warning: #D97706;
+            --color-danger: #DC2626;
+            --color-info: #2563EB;
+            --color-sidebar-bg: #0F0F0F;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-primary-text);
+            font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        * { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+        /* ── Typography Weight System (same as index) ── */
+        h1, h2, h3, h4, h5, h6 { font-weight: 500 !important; }
+        p, .text-secondary-text { font-weight: 400 !important; }
+
+        /* Helpers */
+        .text-primary-text { color: var(--color-primary-text); }
+        .text-secondary-text { color: var(--color-secondary-text); }
+        .text-accent { color: var(--color-accent); }
+        .text-accent-light { color: var(--color-accent-light); }
+        .bg-background { background-color: var(--color-background); }
+        .bg-hover { background-color: var(--color-hover); }
+        .bg-accent { background-color: var(--color-accent); }
+        .border-border { border-color: var(--color-border); }
+        .card-bg { background-color: var(--color-card-bg); }
+        .bg-sidebar { background-color: var(--color-sidebar-bg); }
+
+        .bg-success { background-color: var(--color-success); }
+        .bg-warning { background-color: var(--color-warning); }
+        .bg-danger { background-color: var(--color-danger); }
+        .bg-info { background-color: var(--color-info); }
+        .text-success { color: var(--color-success); }
+        .text-warning { color: var(--color-warning); }
+        .text-danger { color: var(--color-danger); }
+        .text-info { color: var(--color-info); }
+
+        /* Rich Gradient (same as index) */
+        .bg-custom-gradient {
+            background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+        }
+        .bg-accent-gradient {
+            background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+        }
+
+        /* Dashboard Cards (same as admin) */
+        .dashboard-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 1.25rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.04);
+            height: auto;
+        }
+        .dashboard-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 16px 24px -12px rgba(37, 99, 235, 0.12);
+        }
+
+        /* Status Pulse */
+        .status-pulse {
+            width: 10px; height: 10px;
+            background-color: var(--color-accent);
+            border-radius: 9999px;
+            box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+            animation: pulse2 2s infinite;
+        }
+        @keyframes pulse2 {
+            70% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
+        }
+
+        /* Sidebar Links */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            color: var(--color-secondary-text);
+            transition: all 0.18s ease;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background-color: var(--color-accent);
+            color: #FFFFFF;
+            background: linear-gradient(145deg, #3B82F6, #1E3A8A);
+        }
+        .sidebar-link:hover svg,
+        .sidebar-link.active svg { stroke: white; }
+        .sidebar-link.logout:hover {
+            background: #d13b3b;
+            color: white;
+        }
+
+        /* RTL Handling */
+        html[dir="rtl"] .sidebar-link { flex-direction: row-reverse; }
+        html[dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
+        html[dir="rtl"] .sidebar-link svg { transform: scaleX(-1); }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .admin-section { display: block; }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { height: 4px; width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 10px;
+        }
+
+        /* Mobile Overlay */
+        #mobile-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            position: fixed;
+            inset: 0;
+            z-index: 55;
+        }
+        #mobile-overlay.active { opacity: 1; pointer-events: auto; }
+
+        /* Chart Bars */
+        .chart-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #3B82F6, #1E3A8A);
+            transition: width 0.3s ease;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-badge.active { background-color: var(--color-success); color: white; }
+        .status-badge.pending { background-color: var(--color-warning); color: white; }
+        .status-badge.cancelled { background-color: var(--color-danger); color: white; }
+        .status-badge.completed { background-color: var(--color-info); color: white; }
+
+        /* Logo text */
+        .logo-text {
+            font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+            font-weight: 800;
+            letter-spacing: 0.025em;
+        }
+
+        /* Toggle switches */
+        .toggle-switch {
+            width: 48px; height: 24px;
+            border-radius: 9999px;
+            padding: 2px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .toggle-switch.active { background: var(--color-accent); }
+        .toggle-switch.inactive { background: var(--color-border); }
+        .toggle-switch .knob {
+            width: 20px; height: 20px;
+            background: white;
+            border-radius: 9999px;
+            transition: transform 0.2s;
+        }
+        .toggle-switch.active .knob { transform: translateX(24px); }
+        html[dir="rtl"] .toggle-switch.active .knob { transform: translateX(-24px); }
+    </style>
+</head>
+
+<body class="antialiased bg-background h-screen overflow-hidden w-full">
+    <!-- TOP BAR (same structure as admin, with CareRide logo) -->
+    <header class="border-b border-border bg-background sticky top-0 z-50 w-full">
+        <div class="max-w-[1920px] mx-auto px-2 sm:px-6 lg:px-10 py-3 flex items-center justify-between gap-1 sm:gap-3">
+
+            <!-- Hamburger + Brand -->
+            <div class="flex items-center gap-1 sm:gap-3">
+                <button id="mobile-menu-toggle"
+                    class="lg:hidden p-1.5 sm:p-2 -ml-1 sm:-ml-2 rounded-xl hover:bg-hover transition text-primary-text"
+                    title="Open Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <a href="index.html" class="flex items-center gap-2 shrink-0 group">
+                        <span class="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full text-white shadow-lg group-hover:scale-110 transition-transform"
+                              style="background: linear-gradient(135deg, #3B82F6, #1E3A8A);">
+                            <i class="fa-solid fa-hand-holding-heart text-base sm:text-lg"></i>
+                        </span>
+                        <div class="leading-tight">
+                            <span class="block text-lg sm:text-xl logo-text tracking-wide text-accent">CareRide</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Admin Utilities (same as admin, adapted for family dashboard) -->
+            <div class="flex items-center gap-1 sm:gap-4 shrink-0 rtl:flex-row-reverse">
+                <!-- Search -->
+                <div class="hidden md:flex items-center bg-hover rounded-full px-4 py-2 border border-border w-32 sm:w-40 lg:w-auto overflow-hidden">
+                    <i class="fas fa-search text-secondary-text text-sm mr-2"></i>
+                    <input type="text" placeholder="Search rides..."
+                        class="bg-transparent border-none outline-none text-sm w-48 text-primary-text placeholder-secondary-text/50">
+                </div>
+
+                <!-- Language toggle (same icon as index) -->
+                <button id="lang-toggle" class="p-1.5 sm:p-2 rounded-full hover:bg-hover transition text-primary-text"
+                    title="Toggle RTL/LTR">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                    </svg>
+                </button>
+
+                <!-- Theme toggle (same icons as index: light-icon / dark-icon) -->
+                <button id="theme-toggle-user" class="p-1.5 sm:p-2 rounded-full hover:bg-hover transition text-primary-text">
+                    <svg class="w-5 h-5 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="w-5 h-5 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
+                <!-- Notifications -->
+                <div class="relative">
+                    <button class="p-1.5 sm:p-2 rounded-full hover:bg-hover transition text-primary-text relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-danger rounded-full"></span>
+                    </button>
+                </div>
+
+                <!-- Family Profile -->
+                <div class="relative flex items-center gap-1.5 sm:gap-2 pl-1.5 sm:pl-3 border-l border-border rtl:border-l-0 rtl:border-r min-w-0">
+                    <div class="relative flex-shrink-0">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-accent flex items-center justify-center text-accent font-semibold">
+                            <i class="fas fa-user-circle text-xs"></i>
+                        </div>
+                        <span class="absolute bottom-0 right-0 status-pulse"></span>
+                    </div>
+                    <div class="hidden sm:block text-sm">
+                        <p class="font-semibold leading-none">Sarah Mitchell</p>
+                        <p class="text-[10px] text-secondary-text mt-1 uppercase tracking-widest font-semibold">Family Account</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="mobile-overlay" class="lg:hidden"></div>
+
+    <!-- MAIN LAYOUT (same as admin) -->
+    <main class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-10 py-6 h-[calc(100vh-64px)] w-full relative">
+        <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-10 h-full">
+
+            <!-- SIDEBAR (same structure as admin, adapted for CareRide family) -->
+            <aside id="sidebar-container"
+                class="fixed lg:static top-0 left-0 rtl:right-0 rtl:left-auto h-full lg:h-auto w-72 lg:w-72 xl:w-80 z-[60] lg:z-10 transform -translate-x-full rtl:translate-x-full lg:translate-x-0 lg:rtl:translate-x-0 transition-transform duration-300 ease-in-out bg-sidebar lg:bg-transparent flex-shrink-0">
+                <div class="dashboard-card p-5 bg-sidebar h-full overflow-y-auto custom-scrollbar border-r lg:border border-border lg:rounded-[1.25rem] rounded-none shadow-none lg:shadow-md">
+                    <!-- Mobile Sidebar Header -->
+                    <div class="flex lg:hidden justify-between items-center mb-6 px-2">
+                        <div class="flex items-center gap-2 text-accent">
+                            <i class="fas fa-bars-staggered"></i>
+                            <span class="text-xs font-medium uppercase tracking-widest">Family Menu</span>
+                        </div>
+                        <button id="close-sidebar" class="p-2 hover:bg-hover rounded-lg text-primary-text">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Profile Display -->
+                    <div class="flex lg:hidden items-center gap-3 mb-6 px-2 pb-6 border-b border-border">
+                        <div class="relative flex-shrink-0">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-accent flex items-center justify-center text-accent font-semibold">
+                                <i class="fas fa-user-circle text-sm"></i>
+                            </div>
+                            <span class="absolute bottom-0 right-0 status-pulse"></span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-primary-text leading-tight">Sarah Mitchell</p>
+                            <p class="text-[10px] text-secondary-text mt-0.5 uppercase tracking-widest font-medium">Family Account</p>
+                        </div>
+                    </div>
+
+                    <nav class="flex flex-col gap-1">
+                        <p class="text-[10px] uppercase tracking-widest text-secondary-text font-medium mt-2 mb-2 px-2">
+                            Main</p>
+                        <a href="#" onclick="activateSection('overview')" data-section="overview"
+                            class="sidebar-link active">
+                            <i class="fas fa-chart-pie w-5"></i>
+                            <span>Overview</span>
+                        </a>
+                        <a href="#" onclick="activateSection('schedule')" data-section="schedule"
+                            class="sidebar-link">
+                            <i class="fas fa-calendar-plus w-5"></i>
+                            <span>Schedule a Ride</span>
+                        </a>
+                        <a href="#" onclick="activateSection('tracking')" data-section="tracking"
+                            class="sidebar-link">
+                            <i class="fas fa-location-dot w-5"></i>
+                            <span>Live Tracking</span>
+                        </a>
+
+                        <p class="text-[10px] uppercase tracking-widest text-secondary-text font-medium mt-4 mb-2 px-2">
+                            History & Payments</p>
+                        <a href="#" onclick="activateSection('history')" data-section="history"
+                            class="sidebar-link">
+                            <i class="fas fa-clock-rotate-left w-5"></i>
+                            <span>Ride History</span>
+                        </a>
+                        <a href="#" onclick="activateSection('payments')" data-section="payments"
+                            class="sidebar-link">
+                            <i class="fas fa-credit-card w-5"></i>
+                            <span>Payment Methods</span>
+                        </a>
+
+                        <p class="text-[10px] uppercase tracking-widest text-secondary-text font-medium mt-4 mb-2 px-2">
+                            Support</p>
+                        <a href="#" onclick="activateSection('support')" data-section="support" class="sidebar-link">
+                            <i class="fas fa-headset w-5"></i>
+                            <span>Help & Support</span>
+                        </a>
+                        <a href="#" onclick="activateSection('settings')" data-section="settings" class="sidebar-link">
+                            <i class="fas fa-sliders w-5"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" onclick="activateSection('logout')" class="sidebar-link logout mt-2 text-red-500">
+                            <i class="fas fa-power-off w-5"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </nav>
+
+                    <div class="mt-8 pt-4 border-t border-border text-[11px] text-secondary-text">
+                        <div class="flex justify-between"><span>Next Ride</span><span class="font-semibold text-success">Tomorrow 9:30 AM</span></div>
+                        <div class="flex justify-between mt-1.5"><span>Driver</span><span class="font-medium text-accent">James W.</span></div>
+                        <div class="flex justify-between mt-1.5"><span>Ride Status</span><span class="font-medium">Confirmed</span></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- CONTENT AREA -->
+            <div class="flex-1 min-w-0 overflow-y-auto custom-scrollbar pr-2">
+                <!-- OVERVIEW SECTION -->
+                <div id="overview" class="admin-section">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active mb-6 bg-accent-gradient text-white">
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div>
+                                <h2 class="text-2xl sm:text-3xl font-semibold mb-2">Welcome back, Sarah</h2>
+                                <p class="text-white/80 text-sm">Here's the latest on your loved one's rides and schedule.</p>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider">April 09, 2026</span>
+                                <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1">
+                                    <i class="fas fa-circle text-success text-[6px]"></i> Live
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid (adapted for CareRide) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
+                        <div class="dashboard-card p-6 reveal">
+                            <div class="flex justify-between items-start gap-4">
+                                <div>
+                                    <p class="text-secondary-text text-xs uppercase tracking-wider font-medium">Upcoming Rides</p>
+                                    <p class="text-3xl font-semibold mt-2">3</p>
+                                    <p class="text-success text-xs font-medium mt-2 flex items-center gap-1">
+                                        <i class="fas fa-arrow-up"></i> Next: Tomorrow
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-calendar-check text-accent text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-border flex gap-4 text-xs">
+                                <span><span class="font-semibold">2</span> <span class="text-secondary-text">medical</span></span>
+                                <span><span class="font-semibold">1</span> <span class="text-secondary-text">social</span></span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card p-6 reveal">
+                            <div class="flex justify-between items-start gap-4">
+                                <div>
+                                    <p class="text-secondary-text text-xs uppercase tracking-wider font-medium">Completed Rides</p>
+                                    <p class="text-3xl font-semibold mt-2">24</p>
+                                    <p class="text-success text-xs font-medium mt-2 flex items-center gap-1">
+                                        <i class="fas fa-arrow-up"></i> +4 this month
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-check-circle text-accent text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-border flex gap-4 text-xs">
+                                <span><span class="font-semibold">100%</span> <span class="text-secondary-text">on-time</span></span>
+                                <span><span class="font-semibold">4.9</span> <span class="text-secondary-text">avg rating</span></span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card p-6 reveal">
+                            <div class="flex justify-between items-start gap-4">
+                                <div>
+                                    <p class="text-secondary-text text-xs uppercase tracking-wider font-medium">Driver Hours</p>
+                                    <p class="text-3xl font-semibold mt-2">18h</p>
+                                    <p class="text-success text-xs font-medium mt-2 flex items-center gap-1">
+                                        <i class="fas fa-clock"></i> This month
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-clock text-accent text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-border flex gap-4 text-xs">
+                                <span><span class="font-semibold">8</span> <span class="text-secondary-text">trips</span></span>
+                                <span><span class="font-semibold">2.2h</span> <span class="text-secondary-text">avg wait</span></span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card p-6 reveal">
+                            <div class="flex justify-between items-start gap-4">
+                                <div>
+                                    <p class="text-secondary-text text-xs uppercase tracking-wider font-medium">Saved Payments</p>
+                                    <p class="text-3xl font-semibold mt-2">2</p>
+                                    <p class="text-success text-xs font-medium mt-2 flex items-center gap-1">
+                                        <i class="fas fa-credit-card"></i> Visa ··· 4242
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-wallet text-accent text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-border flex gap-4 text-xs">
+                                <span><span class="font-semibold">Auto-pay</span> <span class="text-secondary-text">enabled</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts & Recent Activity -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="dashboard-card p-6 lg:col-span-2 reveal">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="font-semibold text-lg">Ride Activity</h3>
+                                <select class="bg-hover border border-border rounded-full px-4 py-2 text-xs font-medium uppercase">
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                    <option>This Year</option>
+                                </select>
+                            </div>
+                            <div class="h-64 flex items-end justify-between gap-2">
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 30px; width: 60%;"></div>
+                                    <span class="text-xs text-secondary-text">Mon</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 55px; width: 80%;"></div>
+                                    <span class="text-xs text-secondary-text">Tue</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 40px; width: 70%;"></div>
+                                    <span class="text-xs text-secondary-text">Wed</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 75px; width: 95%;"></div>
+                                    <span class="text-xs text-secondary-text">Thu</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 90px; width: 100%;"></div>
+                                    <span class="text-xs text-secondary-text">Fri</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 65px; width: 85%;"></div>
+                                    <span class="text-xs text-secondary-text">Sat</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full chart-bar" style="height: 50px; width: 75%;"></div>
+                                    <span class="text-xs text-secondary-text">Sun</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-border flex justify-between">
+                                <span class="text-secondary-text text-sm">Total rides this week</span>
+                                <span class="font-semibold text-xl text-accent">8</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card p-6 reveal">
+                            <h3 class="font-semibold text-lg mb-4">Recent Activity</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-check-circle text-success text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold">Ride completed</p>
+                                        <p class="text-xs text-secondary-text">Medical appointment · 2h ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-calendar-plus text-info text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold">New ride scheduled</p>
+                                        <p class="text-xs text-secondary-text">Grocery run · Tomorrow 9:30 AM</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-star text-warning text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold">Driver rating submitted</p>
+                                        <p class="text-xs text-secondary-text">5 stars for James W. · 1 day ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-credit-card text-accent text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold">Payment method updated</p>
+                                        <p class="text-xs text-secondary-text">Visa ending 4242 · 2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="w-full mt-6 py-3 text-xs font-semibold uppercase tracking-wider text-accent border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:bg-blue-900/30 transition">
+                                View All Activity
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCHEDULE A RIDE SECTION -->
+                <div id="schedule" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                            <h2 class="text-xl sm:text-2xl font-semibold text-primary-text flex items-center gap-2">
+                                <span class="text-accent">🚗</span> Schedule a Ride
+                            </h2>
+                            <button class="px-6 py-3 bg-accent-gradient text-white rounded-full text-xs font-semibold uppercase tracking-widest shadow-lg">
+                                <i class="fas fa-plus mr-1"></i> New Ride Request
+                            </button>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-hover rounded-2xl p-5">
+                                <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Pickup Location</label>
+                                <input type="text" placeholder="123 Main St, Anytown" class="w-full bg-background border border-border rounded-xl px-4 py-3 text-primary-text">
+                            </div>
+                            <div class="bg-hover rounded-2xl p-5">
+                                <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Destination</label>
+                                <input type="text" placeholder="Medical Center, 456 Health Ave" class="w-full bg-background border border-border rounded-xl px-4 py-3 text-primary-text">
+                            </div>
+                            <div class="bg-hover rounded-2xl p-5">
+                                <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Date & Time</label>
+                                <input type="datetime-local" class="w-full bg-background border border-border rounded-xl px-4 py-3 text-primary-text">
+                            </div>
+                            <div class="bg-hover rounded-2xl p-5">
+                                <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Passenger</label>
+                                <select class="w-full bg-background border border-border rounded-xl px-4 py-3 text-primary-text">
+                                    <option>Eleanor Mitchell (Mother)</option>
+                                    <option>Robert Mitchell (Father)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="bg-hover rounded-2xl p-5 mb-6">
+                            <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-3">Special Assistance</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-accent"> Wheelchair access</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-accent"> Door-through-door escort</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-accent"> Wait at destination</label>
+                            </div>
+                        </div>
+
+                        <button class="w-full py-4 bg-accent-gradient text-white rounded-full text-sm font-semibold uppercase tracking-widest shadow-lg">
+                            <i class="fas fa-paper-plane mr-2"></i> Request Ride
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LIVE TRACKING SECTION -->
+                <div id="tracking" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <h2 class="text-xl sm:text-2xl font-semibold text-primary-text mb-8 flex items-center gap-2">
+                            <span class="text-accent">📍</span> Live Tracking
+                        </h2>
+
+                        <div class="bg-hover rounded-2xl p-6 mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <p class="text-sm text-secondary-text">Current Ride</p>
+                                    <p class="font-semibold text-lg">Medical Appointment — Dr. Reynolds</p>
+                                </div>
+                                <span class="status-badge active">En Route</span>
+                            </div>
+                            <div class="relative h-48 bg-border rounded-xl mb-6 flex items-center justify-center text-secondary-text">
+                                <i class="fas fa-map text-4xl opacity-20"></i>
+                                <span class="absolute bottom-2 left-2 text-xs bg-background px-2 py-1 rounded">Map preview</span>
+                            </div>
+                            <div class="flex flex-wrap gap-6 text-sm">
+                                <div>
+                                    <p class="text-secondary-text">Driver</p>
+                                    <p class="font-semibold">James W.</p>
+                                </div>
+                                <div>
+                                    <p class="text-secondary-text">ETA</p>
+                                    <p class="font-semibold text-accent">12 min</p>
+                                </div>
+                                <div>
+                                    <p class="text-secondary-text">Vehicle</p>
+                                    <p class="font-semibold">Toyota Sienna · Silver</p>
+                                </div>
+                                <div>
+                                    <p class="text-secondary-text">License</p>
+                                    <p class="font-semibold">XYZ-789</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full py-3 text-sm font-semibold uppercase tracking-wider text-accent border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:bg-blue-900/30 transition">
+                            <i class="fas fa-phone mr-2"></i> Call Driver
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIDE HISTORY SECTION -->
+                <div id="history" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                            <h2 class="text-xl sm:text-2xl font-semibold text-primary-text flex items-center gap-2">
+                                <span class="text-accent">📋</span> Ride History
+                            </h2>
+                            <button class="px-6 py-3 border border-border rounded-full text-xs font-medium uppercase tracking-widest hover:bg-hover">
+                                <i class="fas fa-filter mr-1"></i> Filter
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-hover rounded-2xl gap-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                        <i class="fas fa-stethoscope text-accent text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Medical Appointment</p>
+                                        <p class="text-xs text-secondary-text mt-1">Apr 08, 2026 · Dr. Reynolds · Round trip</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="status-badge completed">Completed</span>
+                                    <span class="font-semibold">$45.00</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-hover rounded-2xl gap-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                        <i class="fas fa-cart-shopping text-accent text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Grocery Shopping</p>
+                                        <p class="text-xs text-secondary-text mt-1">Apr 05, 2026 · Whole Foods · 1.5 hrs</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="status-badge completed">Completed</span>
+                                    <span class="font-semibold">$70.00</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-hover rounded-2xl gap-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                        <i class="fas fa-user-group text-accent text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Social Outing — Church</p>
+                                        <p class="text-xs text-secondary-text mt-1">Apr 02, 2026 · St. Mary's · Round trip</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="status-badge completed">Completed</span>
+                                    <span class="font-semibold">$45.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAYMENT METHODS SECTION -->
+                <div id="payments" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                            <h2 class="text-xl sm:text-2xl font-semibold text-primary-text flex items-center gap-2">
+                                <span class="text-accent">💳</span> Payment Methods
+                            </h2>
+                            <button class="px-6 py-3 bg-accent-gradient text-white rounded-full text-xs font-semibold uppercase tracking-widest shadow-lg">
+                                <i class="fas fa-plus mr-1"></i> Add Card
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-hover rounded-2xl">
+                                <div class="flex items-center gap-4">
+                                    <i class="fab fa-cc-visa text-3xl text-accent"></i>
+                                    <div>
+                                        <p class="font-semibold">Visa ending in 4242</p>
+                                        <p class="text-xs text-secondary-text">Expires 08/2028</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">Default</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-hover rounded-2xl">
+                                <div class="flex items-center gap-4">
+                                    <i class="fab fa-cc-mastercard text-3xl text-accent"></i>
+                                    <div>
+                                        <p class="font-semibold">Mastercard ending in 8890</p>
+                                        <p class="text-xs text-secondary-text">Expires 11/2027</p>
+                                    </div>
+                                </div>
+                                <button class="text-secondary-text hover:text-accent"><i class="fas fa-ellipsis-vertical"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-semibold">Auto-pay</p>
+                                    <p class="text-xs text-secondary-text">Automatically charge default card after each ride</p>
+                                </div>
+                                <div class="toggle-switch active" onclick="this.classList.toggle('active'); this.classList.toggle('inactive');">
+                                    <div class="knob"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HELP & SUPPORT SECTION -->
+                <div id="support" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <h2 class="text-xl sm:text-2xl font-semibold text-primary-text mb-8 flex items-center gap-2">
+                            <span class="text-accent">🎧</span> Help & Support
+                        </h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-hover rounded-2xl p-6 text-center">
+                                <div class="w-14 h-14 mx-auto bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg mb-2">24/7 Dispatch</h3>
+                                <p class="text-sm text-secondary-text mb-4">Call us anytime for urgent ride changes or assistance.</p>
+                                <a href="tel:+18005550199" class="text-accent font-semibold">(800) 555-0199</a>
+                            </div>
+                            <div class="bg-hover rounded-2xl p-6 text-center">
+                                <div class="w-14 h-14 mx-auto bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg mb-2">Email Support</h3>
+                                <p class="text-sm text-secondary-text mb-4">We'll respond within 2 hours during business hours.</p>
+                                <a href="mailto:families@careride.com" class="text-accent font-semibold">families@careride.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS SECTION -->
+                <div id="settings" class="admin-section hidden">
+                    <div class="dashboard-card p-5 sm:p-7 reveal active">
+                        <h2 class="text-xl sm:text-2xl font-semibold text-primary-text mb-8 flex items-center gap-2">
+                            <span class="text-accent">⚙️</span> Family Settings
+                        </h2>
+
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="font-semibold text-lg mb-4 pb-2 border-b border-border">Profile</h3>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Full Name</label>
+                                        <input type="text" value="Sarah Mitchell" class="w-full bg-hover border border-border rounded-xl px-4 py-3 text-primary-text">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs uppercase tracking-wider font-semibold text-secondary-text block mb-2">Email</label>
+                                        <input type="email" value="sarah.m@example.com" class="w-full bg-hover border border-border rounded-xl px-4 py-3 text-primary-text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold text-lg mb-4 pb-2 border-b border-border">Notifications</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-hover rounded-2xl">
+                                        <div>
+                                            <p class="font-semibold">SMS Alerts</p>
+                                            <p class="text-xs text-secondary-text">Receive text when driver arrives and ride ends</p>
+                                        </div>
+                                        <div class="toggle-switch active" onclick="this.classList.toggle('active'); this.classList.toggle('inactive');">
+                                            <div class="knob"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-hover rounded-2xl">
+                                        <div>
+                                            <p class="font-semibold">Email Receipts</p>
+                                            <p class="text-xs text-secondary-text">Get a detailed receipt after each ride</p>
+                                        </div>
+                                        <div class="toggle-switch active" onclick="this.classList.toggle('active'); this.classList.toggle('inactive');">
+                                            <div class="knob"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 flex gap-4">
+                                <button class="bg-accent-gradient text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest shadow-xl">Save Changes</button>
+                                <button class="border border-border px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-hover">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LOGOUT SECTION -->
+                <div id="logout" class="admin-section hidden">
+                    <div class="dashboard-card p-10 reveal active text-center max-w-lg mx-auto border-red-500/20">
+                        <div class="w-20 h-20 mx-auto bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center text-red-500 text-3xl mb-6">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-primary-text tracking-tighter">Log out of CareRide?</h2>
+                        <p class="text-secondary-text mt-3 text-sm leading-relaxed italic">You will need to sign in again to manage rides.</p>
+                        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="login.html">
+                                <button class="bg-red-500 hover:bg-red-600 text-white font-semibold uppercase tracking-widest px-8 py-3 rounded-full text-[10px] transition shadow-lg shadow-red-200 dark:shadow-none">
+                                    Log Out
+                                </button>
+                            </a>
+                            <button onclick="activateSection('overview')"
+                                class="bg-hover border border-border px-8 py-3 rounded-full text-[10px] font-semibold uppercase tracking-widest transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SYSTEM STATUS / FOOTER -->
+                <div class="bg-accent-gradient rounded-3xl p-6 sm:p-8 mt-10 text-white reveal flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-blue-500/20">
+                    <div class="flex items-center gap-4 text-center sm:text-left">
+                        <span class="w-3 h-3 bg-white rounded-full animate-ping flex-shrink-0"></span>
+                        <div>
+                            <p class="font-semibold text-lg tracking-tighter uppercase">Family Dashboard Online</p>
+                            <p class="text-xs text-white/70 italic">Secure connection · Real-time ride updates</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="bg-white/20 backdrop-blur-md px-6 py-2.5 rounded-full text-[10px] font-semibold uppercase tracking-widest">500+ families trust CareRide</span>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <footer class="mt-12 text-center text-[10px] text-secondary-text border-t border-border pt-8 pb-12 w-full">
+                    <p class="uppercase tracking-[0.3em] font-semibold opacity-40">© 2026 CareRide · Family Dashboard v1.0</p>
+                    <div class="flex justify-center gap-8 mt-4 font-semibold uppercase opacity-60">
+                        <span class="hover:text-accent cursor-pointer transition">Privacy</span>
+                        <span class="hover:text-accent cursor-pointer transition">Terms</span>
+                        <span class="hover:text-accent cursor-pointer transition">Safety</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const htmlEl = document.documentElement;
+
+            // ----- 1. MOBILE MENU ENGINE -----
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const sidebar = document.getElementById('sidebar-container');
+            const overlay = document.getElementById('mobile-overlay');
+
+            function toggleMobileMenu(isOpen) {
+                if (isOpen) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.add('active');
+                    document.body.classList.toggle('overflow-hidden', isOpen);
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+
+            if (menuToggle) menuToggle.addEventListener('click', () => toggleMobileMenu(true));
+            if (closeSidebar) closeSidebar.addEventListener('click', () => toggleMobileMenu(false));
+            if (overlay) overlay.addEventListener('click', () => toggleMobileMenu(false));
+
+            // ----- 2. THEME ENGINE (same icons & logic as index.html) -----
+            const themeBtn = document.getElementById('theme-toggle-user');
+            const lightIcons = document.querySelectorAll('.light-icon');
+            const darkIcons = document.querySelectorAll('.dark-icon');
+
+            function setTheme(theme) {
+                htmlEl.setAttribute('data-theme', theme);
+                localStorage.setItem('careride_theme', theme);
+                // Toggle icon visibility (same as index)
+                lightIcons.forEach(i => i.classList.toggle('hidden', theme === 'dark'));
+                darkIcons.forEach(i => i.classList.toggle('hidden', theme === 'light'));
+                if (themeBtn) {
+                    // Icons are already toggled via classes, no innerHTML change needed
+                }
+            }
+            const savedTheme = localStorage.getItem('careride_theme') || 'light';
+            setTheme(savedTheme);
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const current = htmlEl.getAttribute('data-theme');
+                    setTheme(current === 'light' ? 'dark' : 'light');
+                });
+            }
+
+            // ----- 3. RTL ENGINE (same icon as index) -----
+            const langBtn = document.getElementById('lang-toggle');
+            function setDirection(dir) {
+                htmlEl.setAttribute('dir', dir);
+                localStorage.setItem('careride_lang', dir === 'rtl' ? 'ar' : 'en');
+            }
+            const savedLang = localStorage.getItem('careride_lang') || 'en';
+            setDirection(savedLang === 'ar' ? 'rtl' : 'ltr');
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    const currentDir = htmlEl.getAttribute('dir') || 'ltr';
+                    setDirection(currentDir === 'ltr' ? 'rtl' : 'ltr');
+                });
+            }
+
+            // ----- 4. REVEAL SCROLL ENGINE -----
+            function checkReveal() {
+                const reveals = document.querySelectorAll('.reveal');
+                reveals.forEach(el => {
+                    const windowHeight = window.innerHeight;
+                    const revealTop = el.getBoundingClientRect().top;
+                    if (revealTop < windowHeight - 50) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', checkReveal);
+            window.addEventListener('load', checkReveal);
+
+            // ----- 5. NAVIGATION ENGINE -----
+            const sections = ['overview', 'schedule', 'tracking', 'history', 'payments', 'support', 'settings', 'logout'];
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+            window.activateSection = function (sectionId) {
+                sections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                });
+                const activeEl = document.getElementById(sectionId);
+                if (activeEl) {
+                    activeEl.classList.remove('hidden');
+                    activeEl.classList.add('active');
+                }
+
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.section === sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                if (window.innerWidth < 1024) {
+                    toggleMobileMenu(false);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const section = this.dataset.section;
+                    if (section) activateSection(section);
+                });
+            });
+
+            // Default to overview
+            activateSection('overview');
+        })();
+    </script>
+</body>
+
+</html>

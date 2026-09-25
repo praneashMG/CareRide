@@ -1,0 +1,788 @@
+﻿    <!DOCTYPE html>
+    <html lang="en" dir="ltr" data-theme="light">
+    <head>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="assets/fav.png" type="image/jpeg">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <title>CareRide</title>
+
+    <script src="tailwind.js"></script>
+        <style>
+            /* --- Modern Professional Blue Palette --- */
+            :root, html[data-theme='light'] {
+                --color-background: #FFFFFF;
+                --color-primary-text: #1E293B; 
+                --color-secondary-text: #475569;
+                --color-accent: #2563EB; 
+                --color-accent-light: #EFF6FF; 
+                --color-border: #E2E8F0; 
+                --color-hover: #F8FAFC; 
+                --color-footer-bg: #0F172A;
+                --color-footer-text: #F1F5F9; 
+            }
+            html[data-theme='dark'] {
+                --color-background: #020617;
+                --color-primary-text: #F8FAFC;
+                --color-secondary-text: #94A3B8;
+                --color-accent: #3B82F6; 
+                --color-accent-light: #1E3A8A; 
+                --color-border: #1E293B; 
+                --color-hover: #0F172A;
+                --color-footer-bg: #020617;
+                --color-footer-text: #F8FAFC;
+            }
+            
+            body {
+                background-color: var(--color-background);
+                color: var(--color-primary-text);
+                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+                transition: background-color 0.3s, color 0.3s;
+                overflow-x: hidden;
+            }
+            
+            .text-primary-text { color: var(--color-primary-text); }
+            .text-secondary-text { color: var(--color-secondary-text); }
+            .text-accent { color: var(--color-accent); }
+            .text-accent-light { color: var(--color-accent-light); }
+            .bg-background { background-color: var(--color-background); }
+            .bg-hover { background-color: var(--color-hover); }
+        .bg-accent { background-color: var(--color-accent); }
+            .border-border { border-color: var(--color-border); }
+
+            /* ── Typography Weight System ── */
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 500 !important;
+            }
+            p, .text-secondary-text {
+                font-weight: 400 !important;
+            }
+
+            /* Rich Gradient */
+            .bg-custom-gradient {
+                background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+            }
+
+            #main-footer {
+                background-color: var(--color-footer-bg);
+                color: var(--color-footer-text);
+            }
+            #main-footer .footer-heading {
+                color: #3B82F6 !important; 
+            }
+            #main-footer .footer-link:hover {
+                color: #60A5FA;
+                padding-left: 4px;
+                transition: all 0.2s ease;
+            }
+
+            /* Nav Link */
+            .nav-link {
+                position: relative;
+                transition: color 0.3s;
+                padding: 0.5rem 0.5rem; /* Reduced horizontal padding */
+                font-weight: 600;
+            }
+            .nav-link:hover {
+                color: var(--color-accent) !important;
+            }
+
+            /* DROPDOWN */
+            .dropdown-wrapper { position: relative; }
+            .dropdown-menu {
+                position: absolute;
+                top: calc(100% + 5px);
+                left: 0;
+                background-color: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                min-width: 220px;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+            .dropdown-wrapper:hover .dropdown-menu {
+                opacity: 1; visibility: visible; transform: translateY(0);
+                display: block;
+            }
+            .dropdown-menu a {
+                display: block;
+                padding: 0.75rem 1rem;
+                color: var(--color-primary-text);
+                text-decoration: none;
+                font-size: 0.875rem;
+                transition: all 0.2s ease;
+                border-bottom: 1px solid var(--color-border);
+            }
+            .dropdown-menu a:last-child { border-bottom: none; }
+            .dropdown-menu a:hover {
+                background-color: var(--color-hover);
+                color: var(--color-accent);
+                padding-left: 1.25rem;
+            }
+
+            @media (max-width: 1024px) {
+                .dropdown-menu { position: static; display: none; opacity: 1; visibility: visible; transform: none; box-shadow: none; }
+                .dropdown-wrapper:hover .dropdown-menu { display: block; }
+            }
+
+            /* ── Canonical Button System ── */
+            .btn-primary, .book-btn {
+                background: linear-gradient(135deg, #3B82F6 0%, #1E3A8A 100%);
+                color: white;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                text-align: center;
+                border: 2px solid transparent;
+            }
+            .btn-primary:hover, .book-btn:hover {
+                opacity: 0.88;
+                transform: scale(1.04);
+                box-shadow: 0 6px 18px rgba(59,130,246,0.3);
+            }
+            .btn-outline {
+                background: transparent;
+                color: var(--color-accent);
+                border: 2px solid var(--color-accent);
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                text-align: center;
+            }
+            .btn-outline:hover {
+                background: var(--color-accent);
+                color: white;
+                box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+            }
+            html[data-theme='dark'] .btn-outline {
+                color: #3B82F6;
+                border-color: #3B82F6;
+            }
+            html[data-theme='dark'] .btn-outline:hover {
+                background: #3B82F6;
+                color: #FFF;
+            }
+            .btn-cta-white {
+                background: white;
+                color: #2563EB;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            .btn-cta-white:hover {
+                background: #f3f4f6;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            }
+
+        </style>
+    </head>
+    <body class="antialiased flex flex-col min-h-screen">
+
+        <header class="fixed top-4 left-0 right-0 z-50 transition-all duration-300 shadow-md border border-border bg-background mx-auto w-[96%] xl:w-[96%] 2xl:w-[92%] max-w-[1600px] rounded-full" id="main-header">
+            <nav class="px-6 sm:px-8 xl:px-6 2xl:px-12 py-3 flex items-center justify-between h-[70px] relative">
+                <a href="index.html" class="text-3xl font-serif font-extrabold tracking-wide flex items-center gap-2 shrink-0">    
+                    <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                    <span class="text-accent">CareRide</span>
+                </a>
+
+                <!-- Centered Nav Links -->
+                <div class="hidden xl:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 w-max z-10">
+                    <div class="flex xl:space-x-1 2xl:space-x-3 rtl:space-x-reverse text-primary-text font-medium text-[14px] 2xl:text-[15px]">
+                        <div class="dropdown-wrapper">
+                            <button class="nav-link flex items-center" id="home-dropdown-btn">
+                                Home
+                                <svg class="w-3 h-3 ml-1 relative top-[2.5px] transition-transform duration-200 text-primary-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="index.html">Home 1</a>
+                                <a href="home2.html">Home 2</a>
+                            </div>
+                        </div>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="how-it-works.html" class="nav-link">How It Works</a>
+    <a href="drivers.html" class="nav-link">Drivers</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="dropdown-wrapper">
+                            <button class="nav-link flex items-center" id="dashboard-dropdown-btn">
+                                Dashboard
+                                <svg class="w-3 h-3 ml-1 relative top-[2.5px] transition-transform duration-200 text-primary-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="admin.html">Admin Dashboard</a>
+                                <a href="userdash.html">User Dashboard</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="hidden xl:flex items-center xl:space-x-2 2xl:space-x-4 rtl:space-x-reverse z-10 ml-auto">
+                    <div class="flex items-center xl:space-x-2 2xl:space-x-4 rtl:space-x-reverse">
+                        <button id="theme-toggle" class="icon-btn text-primary-text hover:text-accent p-2 rounded-xl bg-hover border border-border transition duration-200">
+                            <svg class="w-5 h-5 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg class="w-5 h-5 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        </button>
+                        <button id="lang-icon" class="text-primary-text hover:text-accent p-2 rounded-xl bg-hover border border-border transition duration-200">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+    </svg>                    </button>
+                        <div class="flex items-center xl:ml-2 rtl:xl:ml-0 rtl:xl:mr-2 2xl:ml-4 rtl:2xl:ml-0 rtl:2xl:mr-4">
+                            <a href="signup.html" class="book-btn w-14 h-14 rounded-full font-bold shadow-md flex items-center justify-center text-white hover:scale-105 transition-transform" title="Sign Up">
+                                <i class="fa-solid fa-user-plus text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xl:hidden flex items-center">
+                    <button id="mobile-menu-open" class="icon-btn text-primary-text hover:text-accent p-1.5 rounded-full"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow">
+<!-- ================================================== -->
+        <!-- SECTION 1 - HERO (Centered Layout) -->
+        <!-- ================================================== -->
+        <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center min-h-[60vh]">
+            <!-- Background Image -->
+            <img src="assets/rr1.jpg" 
+                 alt="Hero Image" 
+                 class="absolute inset-0 w-full h-full object-cover object-top z-0">
+            
+            <!-- Dark Overlay for Contrast (Works in both Light and Dark modes) -->
+            <div class="absolute inset-0 bg-gray-900/75 dark:bg-black/80 z-0 pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-bold mb-6 shadow-sm">
+                    <i class="fa-solid fa-headset"></i> We're Here to Help
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    Connect with a <br class="hidden sm:block"/>
+                    <span class="text-blue-400">Care Coordinator</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Whether you have questions about our medical fleet, need help setting up a family account, or want to schedule a ride, our dedicated dispatch team is available 24/7.
+                </p>
+                
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SECTION 2 — CONTACT METHODS (4-Column Grid) -->
+        <!-- ================================================== -->
+        <section class="py-16 lg:py-20 bg-hover border-b border-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Method 1: Phone -->
+                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:border-accent hover:shadow-md transition-all flex flex-col items-center text-center group">
+                        <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary-text mb-2">24/7 Dispatch</h3>
+                        <p class="text-secondary-text text-sm mb-4">Call us anytime for urgent rides or immediate support.</p>
+                        <a href="tel:+18005550199" class="text-accent font-bold mt-auto hover:underline">+1 (800) 555-0199</a>
+                    </div>
+
+                    <!-- Method 2: Email -->
+                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:border-accent hover:shadow-md transition-all flex flex-col items-center text-center group">
+                        <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary-text mb-2">Email Support</h3>
+                        <p class="text-secondary-text text-sm mb-4">For general inquiries, billing questions, or feedback.</p>
+                        <a href="mailto:info@CareRide.com" class="text-accent font-bold mt-auto hover:underline">info@CareRide.com</a>
+                    </div>
+
+                    <!-- Method 3: Office -->
+                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:border-accent hover:shadow-md transition-all flex flex-col items-center text-center group">
+                        <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary-text mb-2">Main Office</h3>
+                        <p class="text-secondary-text text-sm mb-4">456 Wellness Boulevard<br>Healthcare District, NY 10002</p>
+                        <a href="#" class="text-accent font-bold mt-auto hover:underline">Get Directions</a>
+                    </div>
+
+                    <!-- Method 4: Hours -->
+                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:border-accent hover:shadow-md transition-all flex flex-col items-center text-center group">
+                        <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary-text mb-2">Working Hours</h3>
+                        <p class="text-secondary-text text-sm mb-4"><strong>Rides:</strong> 24/7/365<br><strong>Office:</strong> Mon-Fri, 8AM - 6PM</p>
+                        <span class="text-green-500 font-bold mt-auto text-sm"><i class="fa-solid fa-circle text-[10px] mr-1"></i> Dispatch is Online</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SECTION 3 — CONTACT FORM & IMAGE (Split Layout) -->
+        <!-- ================================================== -->
+        <section class="py-16 lg:py-24 bg-background">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    
+                    <!-- Left: Form -->
+                    <div class="bg-card p-8 sm:p-10 rounded-3xl border border-border shadow-lg">
+                        <h2 class="text-3xl font-bold text-primary-text mb-2">Send us a Message</h2>
+                        <p class="text-secondary-text mb-8">Fill out the form below and a care coordinator will reach out within 2 hours.</p>
+                        
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-primary-text mb-2" for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-primary-text mb-2" for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="Doe">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-primary-text mb-2" for="email">Email Address</label>
+                                    <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="john@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-primary-text mb-2" for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="(555) 123-4567">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-primary-text mb-2" for="inquiryType">Reason for Inquiry</label>
+                                <select id="inquiryType" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors appearance-none">
+                                    <option>Schedule a Medical Ride</option>
+                                    <option>Request a Wheelchair Van</option>
+                                    <option>Account & Billing Support</option>
+                                    <option>Apply to be a Driver</option>
+                                    <option>Other / General Question</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-primary-text mb-2" for="message">Your Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-background border border-border text-primary-text focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors resize-none" placeholder="How can we assist you today?"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary w-full py-4 text-lg">
+                                Send Message <i class="fa-solid fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Image & Info -->
+                    <div class="order-first lg:order-last">
+                        <div class="relative rounded-3xl overflow-hidden h-[400px] lg:h-[600px] shadow-xl border border-border group">
+                            <img src="assets/rr2.jpg" 
+                                 alt="Friendly care coordinator talking on a headset" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            
+                            <!-- Overlay Card -->
+                            <div class="absolute bottom-6 left-6 right-6 bg-background backdrop-blur-md p-6 rounded-2xl shadow-lg border border-border">
+                                <h3 class="font-bold text-primary-text text-xl mb-2">Speak to a real person.</h3>
+                                <p class="text-secondary-text text-sm mb-0">
+                                    We don't use frustrating automated phone trees. When you call our dispatch line, a trained human care coordinator answers, ready to solve your problem immediately.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SECTION 4 — SERVICE AREA (Visual Map Alternative) -->
+        <!-- ================================================== -->
+        <section class="py-16 lg:py-24 bg-hover border-y border-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-primary-text mb-4">Our Service Areas</h2>
+                    <p class="text-secondary-text text-lg">Proudly providing non-emergency medical transportation across the greater metropolitan area and surrounding counties.</p>
+                </div>
+
+                <div class="relative w-full h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-lg border border-border">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1680108873729!5m2!1sen!2sus" 
+                        class="absolute inset-0 w-full h-full" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SECTION 5 — SUPPORT FAQ (2-Column Grid) -->
+        <!-- ================================================== -->
+        <section class="py-16 lg:py-24 bg-background">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-primary-text mb-4">Quick Answers</h2>
+                    <p class="text-secondary-text text-lg">Before reaching out, you might find the answer to your question here.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Q1 -->
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                        <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
+                            <i class="fa-solid fa-message text-accent mt-1 shrink-0"></i>
+                            What if I have a medical emergency?
+                        </h3>
+                        <p class="text-secondary-text text-sm ml-8">
+                            <strong>Call 911 immediately.</strong> CareRide is a Non-Emergency Medical Transportation (NEMT) service. We do not provide lights-and-sirens ambulance transport for acute medical emergencies.
+                        </p>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                        <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
+                            <i class="fa-solid fa-message text-accent mt-1 shrink-0"></i>
+                            Can I schedule a ride over the phone?
+                        </h3>
+                        <p class="text-secondary-text text-sm ml-8">
+                            Absolutely. While our Family Dashboard is the easiest way to manage recurring rides, you can always call our dispatch line at (800) 555-0199 to have a coordinator book the ride for you.
+                        </p>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                        <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
+                            <i class="fa-solid fa-message text-accent mt-1 shrink-0"></i>
+                            How quickly do you respond to emails?
+                        </h3>
+                        <p class="text-secondary-text text-sm ml-8">
+                            Our administrative team responds to all email inquiries within 2 hours during normal business hours (8AM - 6PM). For urgent matters outside these hours, please call our 24/7 dispatch line.
+                        </p>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                        <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
+                            <i class="fa-solid fa-message text-accent mt-1 shrink-0"></i>
+                            How can I apply to become a companion driver?
+                        </h3>
+                        <p class="text-secondary-text text-sm ml-8">
+                            We are always looking for compassionate individuals with a clean driving record and a heart for seniors. Please select "Apply to be a Driver" in the contact form above to start the screening process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SECTION 6 — FINAL CTA (Clean Banner) -->
+        <!-- ================================================== -->
+        <section class="py-20 lg:py-28 bg-custom-gradient relative overflow-hidden text-center border-t border-border">
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <i class="fa-solid fa-heart-circle-check text-5xl text-white/90 mb-6 block"></i>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Ready to book your first ride?
+                </h2>
+                <p class="text-blue-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+                    Create your free Family Profile to easily manage schedules, payments, and track live driver locations.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="signup.html" class="btn-cta-white text-lg px-8 py-3 w-full sm:w-auto font-bold shadow-lg">
+                        Create Family Account
+                    </a>
+                    <a href="scheduling.html" class="bg-transparent border-2 border-white/40 text-white hover:bg-white/10 hover:border-white transition-all duration-300 font-bold px-8 py-3 rounded-lg w-full sm:w-auto">
+                        View Scheduling
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <div id="mobile-menu-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
+            <div id="drawer-backdrop" class="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+            <div id="drawer-content" class="absolute top-0 left-0 right-0 bg-background rounded-b-2xl shadow-2xl p-6 xl:hidden max-h-[85vh] overflow-y-auto transform translate-y-[-100%] transition-transform duration-300 ease-out">
+                <div class="flex justify-between items-center pb-4 border-b border-border">
+                    <a href="index.html" class="text-2xl font-serif font-extrabold tracking-wide flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                        <span class="text-accent">CareRide</span>
+                    </a>
+                    <button id="mobile-menu-close" class="text-primary-text hover:text-accent"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                </div>
+                <nav class="flex flex-col space-y-2 py-4">
+                    <div>
+                        <button class="block text-primary-text font-semibold text-lg py-2 w-full text-left flex justify-between items-center" id="mobile-homes-toggle">
+                            Home <svg class="w-4 h-4 transform transition-transform duration-200 text-primary-text" id="homes-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="mobile-homes-menu" class="hidden pl-4 flex flex-col space-y-1 mt-1 border-l-2 border-border">
+                            <a href="index.html" class="block text-secondary-text hover:text-accent text-base py-1">Home 1</a>
+                            <a href="home2.html" class="block text-secondary-text hover:text-accent text-base py-1">Home 2</a>
+                        </div>
+                    </div>
+    <a href="services.html" class="block text-primary-text font-semibold text-lg py-2">Services</a>
+    <a href="how-it-works.html" class="block text-primary-text font-semibold text-lg py-2">How It Works</a>
+    <a href="drivers.html" class="block text-primary-text font-semibold text-lg py-2">Drivers</a>
+    <a href="pricing.html" class="block text-primary-text font-semibold text-lg py-2">Pricing</a>
+    <a href="about.html" class="block text-primary-text font-semibold text-lg py-2">About</a>
+    <a href="contact.html" class="block text-primary-text font-semibold text-lg py-2">Contact</a>
+    <!-- Dashboard Dropdown -->
+    <div>
+        <button class="block text-primary-text font-semibold text-lg py-2 w-full text-left flex justify-between items-center" id="mobile-dashboard-toggle">
+            Dashboard
+            <svg class="w-4 h-4 transform transition-transform duration-200" id="dashboard-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <div id="mobile-dashboard-menu" class="hidden pl-4 flex flex-col space-y-1 mt-1 border-l-2 border-border">
+            <a href="admin.html" class="block text-secondary-text hover:text-accent text-base py-1">Admin Dashboard</a>
+            <a href="userdash.html" class="block text-secondary-text hover:text-accent text-base py-1">User Dashboard</a>
+        </div>
+    </div>
+                </nav>
+                <div class="pt-4 border-t border-border mt-4 flex justify-around items-center">
+                    <button id="mobile-lang-icon-drawer" class="flex flex-col items-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+    </svg><span class="text-xs mt-1 text-secondary-text">RTL</span></button>
+                    <button id="drawer-theme-toggle" class="flex flex-col items-center">
+                        <svg class="w-6 h-6 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        <svg class="w-6 h-6 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                        <span class="text-xs mt-1 text-secondary-text">Theme</span>
+                    </button>
+                </div>
+                <div class="flex mt-5 gap-5 w-full">
+                    <a href="login.html" class="flex-1 btn-outline text-center py-1.5 rounded-xl font-bold text-sm shadow-md">Login</a>
+                    <a href="signup.html" class="flex-1 book-btn text-center py-2 rounded-xl font-bold text-sm shadow-md">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <footer id="main-footer" class="pt-20 transition-colors duration-300">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-gray-800">
+                    <div class="lg:col-span-2">
+                        <a href="index.html" class="text-3xl font-serif font-extrabold tracking-wide flex items-center gap-2 mb-4">    
+                            <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                            <span class="text-accent">CareRide</span>
+                        </a>
+    <p class="text-lg leading-relaxed max-w-sm !text-white-400">
+    Providing safe, reliable, and compassionate transportation services for seniors, ensuring peace of mind for families and stress-free medical rides.</p>                    <div class="flex gap-6 mt-10">
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-white hover:text-accent transition text-xl"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="services.html" class="footer-link">Services</a></li>
+                            <li><a href="how-it-works.html" class="footer-link">How It Works</a></li>
+                            <li><a href="drivers.html" class="footer-link">Drivers</a></li>
+                            <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+                            <li><a href="about.html" class="footer-link">About</a></li>
+                            <li><a href="contact.html" class="footer-link">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Address</h4>
+                        <ul class="space-y-2 text-white/80">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-location-dot mt-1 text-accent text-center w-5"></i>
+                                <span>456 Wellness Boulevard,<br>Healthcare District, NY 10002</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-phone text-accent text-center w-5"></i>
+                                <a href="tel:+18005550199" class="footer-link">+1 (800) 555-0199</a>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-envelope text-accent text-center w-5"></i>
+                                <a href="mailto:contact@CareRide.com" class="footer-link">info@CareRide.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading font-bold text-xl mb-6">Dashboard</h4>
+                        <ul class="space-y-2">
+                            <li><a href="scheduling.html" class="footer-link">Ride Scheduling</a></li>
+                            <li><a href="tracking.html" class="footer-link">Driver Tracking</a></li>
+                            <li><a href="history.html" class="footer-link">Ride History</a></li>
+                            <li><a href="payments.html" class="footer-link">Payment Management</a></li>
+                            <li><a href="family-login.html" class="footer-link">Family Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="py-10 text-center text-white-500 text-sm">© 2026 CareRide . All rights reserved.</div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const html = document.documentElement;
+
+                // Drawer Control
+                const menuDrawer = document.getElementById('mobile-menu-drawer');
+                const menuContent = document.getElementById('drawer-content');
+                const menuBackdrop = document.getElementById('drawer-backdrop');
+
+                const openDrawer = () => {
+                    menuDrawer.classList.remove('pointer-events-none');
+                    menuContent.classList.remove('translate-y-[-100%]');
+                    menuBackdrop.classList.add('opacity-50', 'pointer-events-auto');
+                    document.body.style.overflow = 'hidden';
+                };
+                const closeDrawer = () => {
+                    menuContent.classList.add('translate-y-[-100%]');
+                    menuBackdrop.classList.remove('opacity-50', 'pointer-events-auto');
+                    setTimeout(() => { menuDrawer.classList.add('pointer-events-none'); document.body.style.overflow = ''; }, 300);
+                };
+
+                document.getElementById('mobile-menu-open').addEventListener('click', openDrawer);
+                document.getElementById('mobile-menu-close').addEventListener('click', closeDrawer);
+                menuBackdrop.addEventListener('click', closeDrawer);
+
+                // Accordions
+                const setupAccordion = (toggleId, menuId, iconId) => {
+                    const toggle = document.getElementById(toggleId);
+                    toggle?.addEventListener('click', () => {
+                        const menu = document.getElementById(menuId);
+                        const icon = document.getElementById(iconId);
+                        menu.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180');
+                    });
+                };
+                setupAccordion('mobile-homes-toggle', 'mobile-homes-menu', 'homes-icon');
+                setupAccordion('mobile-dashboard-toggle', 'mobile-dashboard-menu', 'dashboard-icon');
+
+
+                // Theme & RTL
+                const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('drawer-theme-toggle')];
+                const applyTheme = (theme) => {
+                    html.setAttribute('data-theme', theme);
+                    document.querySelectorAll('.light-icon').forEach(i => i.classList.toggle('hidden', theme === 'dark'));
+                    document.querySelectorAll('.dark-icon').forEach(i => i.classList.toggle('hidden', theme === 'light'));
+                };
+                themeToggles.forEach(btn => btn.addEventListener('click', () => {
+                    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', next);
+                    applyTheme(next);
+                }));
+                applyTheme(localStorage.getItem('theme') || 'light');
+
+                const langToggles = [document.getElementById('lang-icon'), document.getElementById('mobile-lang-icon-drawer')];
+                langToggles.forEach(btn => btn.addEventListener('click', () => {
+                    const current = localStorage.getItem('language') === 'ar' ? 'en' : 'ar';
+                    localStorage.setItem('language', current);
+                    html.setAttribute('dir', current === 'ar' ? 'rtl' : 'ltr');
+                }));
+                html.setAttribute('dir', localStorage.getItem('language') === 'ar' ? 'rtl' : 'ltr');
+
+                // Active Nav Logic
+                const setActiveNavLink = () => {
+                    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+                    
+                    // Desktop Links
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        if (link.getAttribute('href') === currentPath) {
+                            link.classList.add('active', 'text-accent', 'font-bold');
+                        } else {
+                            link.classList.remove('active', 'text-accent', 'font-bold');
+                        }
+                    });
+
+                    // Desktop Dropdowns
+                    if (['index.html', 'home2.html'].includes(currentPath)) {
+                        document.getElementById('home-dropdown-btn')?.classList.add('active', 'text-accent', 'font-bold');
+                    }
+                    if (['admin.html', 'userdash.html'].includes(currentPath)) {
+                        document.getElementById('dashboard-dropdown-btn')?.classList.add('active', 'text-accent', 'font-bold');
+                    }
+
+                    // Mobile Links
+                    document.querySelectorAll('#drawer-content a').forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === currentPath) {
+                            link.classList.add('text-accent', 'font-bold');
+                            link.classList.remove('text-primary-text', 'text-secondary-text');
+                        } else {
+                            if (link.closest('#mobile-homes-menu') || link.closest('#mobile-dashboard-menu')) {
+                                link.classList.add('text-secondary-text');
+                                link.classList.remove('text-accent', 'font-bold');
+                            } else {
+                                link.classList.add('text-primary-text');
+                                link.classList.remove('text-accent', 'font-bold');
+                            }
+                        }
+                    });
+
+                    // Mobile Toggles
+                    if (['index.html', 'home2.html'].includes(currentPath)) {
+                        document.getElementById('mobile-homes-toggle')?.classList.add('text-accent', 'font-bold');
+                    }
+                    if (['admin.html', 'userdash.html'].includes(currentPath)) {
+                        document.getElementById('mobile-dashboard-toggle')?.classList.add('text-accent', 'font-bold');
+                    }
+                };
+                setActiveNavLink();
+            });
+            document.addEventListener("DOMContentLoaded", function () {
+
+        const btnMonthly = document.getElementById("btn-monthly");
+        const btnSeasonal = document.getElementById("btn-seasonal");
+
+        const monthlyPlans = document.getElementById("monthly-plans");
+        const seasonalPlans = document.getElementById("seasonal-plans");
+
+        if (!btnMonthly || !btnSeasonal || !monthlyPlans || !seasonalPlans) return;
+
+        btnMonthly.addEventListener("click", function () {
+
+            btnMonthly.classList.add("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnMonthly.classList.remove("text-primary-text");
+
+            btnSeasonal.classList.remove("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnSeasonal.classList.add("text-primary-text");
+
+            monthlyPlans.classList.remove("hidden");
+            monthlyPlans.classList.add("grid");
+
+            seasonalPlans.classList.remove("grid");
+            seasonalPlans.classList.add("hidden");
+
+        });
+
+        btnSeasonal.addEventListener("click", function () {
+
+            btnSeasonal.classList.add("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnSeasonal.classList.remove("text-primary-text");
+
+            btnMonthly.classList.remove("bg-[#3B82F6]", "text-white", "shadow-lg");
+            btnMonthly.classList.add("text-primary-text");
+
+            seasonalPlans.classList.remove("hidden");
+            seasonalPlans.classList.add("grid");
+
+            monthlyPlans.classList.remove("grid");
+            monthlyPlans.classList.add("hidden");
+
+        });
+
+    });
+        </script>
+    </body>
+    </html>
+

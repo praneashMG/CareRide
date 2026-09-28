@@ -22,6 +22,7 @@
                 --color-footer-text: #F1F5F9; 
             }
             html[data-theme='dark'] {
+            color-scheme: dark;
                 --color-background: #020617;
                 --color-primary-text: #F8FAFC;
                 --color-secondary-text: #94A3B8;
@@ -184,7 +185,14 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
 
-        </style>
+        
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
+    </style>
     </head>
     <body class="antialiased flex flex-col min-h-screen">
 
@@ -297,41 +305,41 @@
                     <p class="text-secondary-text text-lg">Less than 10% of applicants pass our strict onboarding protocol. When a CareRide driver arrives, you can have complete peace of mind.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                     <!-- Standard 1 -->
-                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors flex flex-col items-center text-center">
+                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors h-full flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
                             <i class="fa-solid fa-fingerprint"></i>
                         </div>
                         <h3 class="text-xl font-bold text-primary-text mb-3">Extensive Backgrounds</h3>
-                        <p class="text-secondary-text text-sm">National and county-level criminal background checks, plus continuous monitoring against sex offender registries.</p>
+                        <p class="text-secondary-text text-sm flex-grow">National and county-level criminal background checks, plus continuous active monitoring against all sex offender registries.</p>
                     </div>
 
                     <!-- Standard 2 -->
-                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors flex flex-col items-center text-center">
+                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors h-full flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
                             <i class="fa-solid fa-car-burst"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Flawless Driving History</h3>
-                        <p class="text-secondary-text text-sm">We require a minimum of 5 years clean driving history, verified through the Department of Motor Vehicles.</p>
+                        <h3 class="text-xl font-bold text-primary-text mb-3">Clean Driving Records</h3>
+                        <p class="text-secondary-text text-sm flex-grow">We strictly require a minimum of five years clean driving history verified through the DMV.</p>
                     </div>
 
                     <!-- Standard 3 -->
-                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors flex flex-col items-center text-center">
+                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors h-full flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
                             <i class="fa-solid fa-vial"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Routine Drug Screening</h3>
-                        <p class="text-secondary-text text-sm">Pre-employment 10-panel drug testing is mandatory, followed by randomized screening throughout employment.</p>
+                        <h3 class="text-xl font-bold text-primary-text mb-3">Routine Drug Testing</h3>
+                        <p class="text-secondary-text text-sm flex-grow">Pre-employment ten-panel drug testing is mandatory, followed by rigorous randomized screening throughout their entire employment.</p>
                     </div>
 
                     <!-- Standard 4 -->
-                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors flex flex-col items-center text-center">
+                    <div class="bg-card p-8 rounded-2xl shadow-sm border border-border hover:border-accent transition-colors h-full flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
                             <i class="fa-solid fa-chalkboard-user"></i>
                         </div>
                         <h3 class="text-xl font-bold text-primary-text mb-3">Behavioral Interviews</h3>
-                        <p class="text-secondary-text text-sm">Multiple rounds of interviews designed to test empathy, patience, and problem-solving in high-stress situations.</p>
+                        <p class="text-secondary-text text-sm flex-grow">Multiple interview rounds are designed to test empathy, patience, and problem-solving in high-stress medical situations.</p>
                     </div>
                 </div>
             </div>
@@ -347,7 +355,7 @@
                     <p class="text-secondary-text text-lg">Real people with a true passion for senior care. Many of our drivers are former nurses, EMTs, and professional caregivers.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                     <!-- Profile 1 -->
                     <div class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group flex flex-col">
                         <div class="h-64 overflow-hidden">

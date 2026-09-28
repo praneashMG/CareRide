@@ -22,6 +22,7 @@
                 --color-footer-text: #F1F5F9; 
             }
             html[data-theme='dark'] {
+            color-scheme: dark;
                 --color-background: #020617;
                 --color-primary-text: #F8FAFC;
                 --color-secondary-text: #94A3B8;
@@ -184,7 +185,14 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
 
-        </style>
+        
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
+    </style>
     </head>
     <body class="antialiased flex flex-col min-h-screen">
 
@@ -285,7 +293,7 @@
         <!-- ================================================== -->
         <section class="py-16 lg:py-20 bg-hover border-b border-border">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                     <!-- Method 1: Phone -->
                     <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:border-accent hover:shadow-md transition-all flex flex-col items-center text-center group">
                         <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-full flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">

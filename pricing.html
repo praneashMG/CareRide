@@ -22,6 +22,7 @@
                 --color-footer-text: #F1F5F9; 
             }
             html[data-theme='dark'] {
+            color-scheme: dark;
                 --color-background: #020617;
                 --color-primary-text: #F8FAFC;
                 --color-secondary-text: #94A3B8;
@@ -184,7 +185,14 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
 
-        </style>
+        
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
+    </style>
     </head>
     <body class="antialiased flex flex-col min-h-screen">
 
@@ -530,7 +538,7 @@
                 <p class="text-secondary-text text-lg">We don't nickel-and-dime for safety and compassion. These premium features are standard on every CareRide trip.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                 <div class="flex flex-col">
                     <i class="fa-solid fa-door-open text-3xl text-accent mb-4"></i>
                     <h4 class="font-bold text-primary-text mb-2">Door-Through-Door</h4>

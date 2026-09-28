@@ -22,6 +22,7 @@
                 --color-footer-text: #F1F5F9; 
             }
             html[data-theme='dark'] {
+            color-scheme: dark;
                 --color-background: #020617;
                 --color-primary-text: #F8FAFC;
                 --color-secondary-text: #94A3B8;
@@ -184,7 +185,14 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
 
-        </style>
+        
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
+    </style>
     </head>
     <body class="antialiased flex flex-col min-h-screen">
 
@@ -289,7 +297,7 @@
                     <p class="text-secondary-text text-lg">From setting up your profile to returning safely home, here is exactly what you can expect during every journey.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 relative">
                     <!-- Connecting line for desktop -->
                     <div class="hidden lg:block absolute top-12 left-12 right-12 h-1 bg-border z-0"></div>
 
@@ -420,7 +428,7 @@
                         <div class="w-14 h-14 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-xl flex items-center justify-center text-2xl mb-6">
                             <i class="fa-solid fa-id-card"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">1. Background & Motor Vehicle Check</h3>
+                        <h3 class="text-xl font-bold text-primary-text mb-3">1. Background & Driving Check</h3>
                         <p class="text-secondary-text text-sm flex-grow">We conduct national and local criminal background checks, sex offender registry screenings, and require a flawless 5-year driving history.</p>
                     </div>
 
@@ -439,7 +447,7 @@
                             <i class="fa-solid fa-brain"></i>
                         </div>
                         <h3 class="text-xl font-bold text-primary-text mb-3">3. Empathy & Dementia Training</h3>
-                        <p class="text-secondary-text text-sm flex-grow">Drivers complete specialized courses on interacting with seniors, managing cognitive decline behaviors, and providing compassionate emotional support.</p>
+                        <p class="text-secondary-text text-sm flex-grow">All drivers complete specialized courses on interacting safely with seniors, managing cognitive decline behaviors, and providing compassionate, dedicated emotional support.</p>
                     </div>
                 </div>
             </div>
@@ -457,7 +465,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- FAQ 1 -->
-                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors h-full flex flex-col">
                         <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
                             <i class="fa-solid fa-circle-question text-accent mt-1"></i>
                             Can the driver wait during my appointment?
@@ -468,7 +476,7 @@
                     </div>
 
                     <!-- FAQ 2 -->
-                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors h-full flex flex-col">
                         <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
                             <i class="fa-solid fa-circle-question text-accent mt-1"></i>
                             Do you accept Medicare or Insurance?
@@ -479,7 +487,7 @@
                     </div>
 
                     <!-- FAQ 3 -->
-                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors h-full flex flex-col">
                         <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
                             <i class="fa-solid fa-circle-question text-accent mt-1"></i>
                             Can a family member ride along?
@@ -490,7 +498,7 @@
                     </div>
 
                     <!-- FAQ 4 -->
-                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="bg-card p-6 rounded-2xl border border-border hover:border-accent transition-colors h-full flex flex-col">
                         <h3 class="text-lg font-bold text-primary-text mb-3 flex items-start gap-3">
                             <i class="fa-solid fa-circle-question text-accent mt-1"></i>
                             How far in advance should I book?

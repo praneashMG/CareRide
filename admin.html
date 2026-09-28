@@ -31,6 +31,7 @@
         }
 
         html[data-theme='dark'] {
+            color-scheme: dark;
             --color-background: #020617;
             --color-primary-text: #F8FAFC;
             --color-secondary-text: #94A3B8;
@@ -230,6 +231,13 @@
         }
         .toggle-switch.active .knob { transform: translateX(24px); }
         html[dir="rtl"] .toggle-switch.active .knob { transform: translateX(-24px); }
+    
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
     </style>
 </head>
 

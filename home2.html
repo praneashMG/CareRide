@@ -22,6 +22,7 @@
                 --color-footer-text: #F1F5F9; 
             }
             html[data-theme='dark'] {
+            color-scheme: dark;
                 --color-background: #020617;
                 --color-primary-text: #F8FAFC;
                 --color-secondary-text: #94A3B8;
@@ -184,7 +185,14 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
 
-        </style>
+        
+        /* Fix native date/time picker icons in dark mode */
+        html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="time"]::-webkit-calendar-picker-indicator,
+        html[data-theme='dark'] input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+        }
+    </style>
     </head>
     <body class="antialiased flex flex-col min-h-screen">
 
@@ -271,10 +279,10 @@
                             Professional Non-Emergency Medical Transportation (NEMT) for dialysis, hospital discharges, and specialized therapy visits. Fully ADA-compliant vehicles with trained medical escorts.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="scheduling.html" class="btn-primary text-lg px-8 py-3">
+                            <a href="scheduling.html" class="btn-primary text-lg px-8 py-3 whitespace-nowrap inline-flex justify-center items-center">
                                 Schedule Transport <i class="fa-solid fa-calendar-check ml-2"></i>
                             </a>
-                            <a href="services.html" class="btn-outline text-lg px-8 py-3">
+                            <a href="services.html" class="btn-outline text-lg px-8 py-3 whitespace-nowrap inline-flex justify-center items-center">
                                 Explore Our Fleet
                             </a>
                         </div>

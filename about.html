@@ -178,6 +178,11 @@
                 color: #2563EB;
                 transition: all 0.3s ease;
                 cursor: pointer;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                display: inline-block;
+                text-align: center;
+                border: 2px solid transparent;
             }
             .btn-cta-white:hover {
                 background: #f3f4f6;
@@ -247,8 +252,9 @@
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
     </svg>                    </button>
                         <div class="flex items-center xl:ml-2 rtl:xl:ml-0 rtl:xl:mr-2 2xl:ml-4 rtl:2xl:ml-0 rtl:2xl:mr-4">
-                            <a href="signup.html" class="book-btn w-14 h-14 rounded-full font-bold shadow-md flex items-center justify-center text-white hover:scale-105 transition-transform" title="Sign Up">
-                                <i class="fa-solid fa-user-plus text-xl"></i>
+                            <a href="signup.html" class="btn-primary text-sm font-bold px-5 py-2.5 rounded-xl whitespace-nowrap shadow-md inline-flex items-center gap-2">
+                                <span>Sign Up</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
                             </a>
                         </div>
                     </div>
@@ -285,8 +291,8 @@
                     CareRide was founded on a simple principle: seniors deserve to maintain their independence without compromising their safety, and families deserve absolute peace of mind.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="contact.html" class="bg-blue-600 hover:bg-blue-500 text-white transition-colors duration-300 font-bold px-8 py-3 rounded-lg shadow-lg text-lg w-full sm:w-auto inline-block text-center">Get in Touch</a>
-                    <a href="#our-story" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-colors duration-300 font-bold px-8 py-3 rounded-lg text-lg w-full sm:w-auto inline-block text-center">Read Our Story</a>
+                    <a href="contact.html" class="btn-primary text-lg px-8 py-3 w-full sm:w-auto inline-block text-center">Get in Touch</a>
+                    <a href="#our-story" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-colors duration-300 font-bold px-8 py-3 rounded-xl text-lg w-full sm:w-auto inline-block text-center">Read Our Story</a>
                 </div>
             </div>
         </section>
@@ -343,39 +349,63 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                     <!-- Value 1 -->
-                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-xl flex items-center justify-center text-2xl mb-6">
-                            <i class="fa-solid fa-shield-heart"></i>
+                    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="assets/c6.jpg" alt="Safety Above All in ADA Transport" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/90 text-white text-xs font-semibold backdrop-blur-sm">
+                                <i class="fa-solid fa-shield-heart text-[11px]"></i> Safety Standard
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Safety Above All</h3>
-                        <p class="text-secondary-text text-sm">We never compromise on safety. From vehicle maintenance to CPR certifications and infectious disease protocols, clinical safety is our baseline.</p>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <h3 class="text-xl font-bold text-primary-text mb-3">Safety Above All</h3>
+                            <p class="text-secondary-text text-sm flex-grow">We never compromise on safety. From vehicle maintenance to CPR certifications and infectious disease protocols, clinical safety is our baseline.</p>
+                        </div>
                     </div>
 
                     <!-- Value 2 -->
-                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-xl flex items-center justify-center text-2xl mb-6">
-                            <i class="fa-solid fa-hands-holding-child"></i>
+                    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="assets/r1.jpg" alt="Empathetic Care and Companion Warmth" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/90 text-white text-xs font-semibold backdrop-blur-sm">
+                                <i class="fa-solid fa-hands-holding-child text-[11px]"></i> Compassion
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Empathetic Care</h3>
-                        <p class="text-secondary-text text-sm">We hire for heart. Technical skills can be taught, but genuine patience, warmth, and empathy for aging adults must come naturally to our team.</p>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <h3 class="text-xl font-bold text-primary-text mb-3">Empathetic Care</h3>
+                            <p class="text-secondary-text text-sm flex-grow">We hire for heart. Technical skills can be taught, but genuine patience, warmth, and empathy for aging adults must come naturally to our team.</p>
+                        </div>
                     </div>
 
                     <!-- Value 3 -->
-                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-xl flex items-center justify-center text-2xl mb-6">
-                            <i class="fa-solid fa-tower-broadcast"></i>
+                    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="assets/d2.jpg" alt="Radical Transparency and GPS Tracking" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/90 text-white text-xs font-semibold backdrop-blur-sm">
+                                <i class="fa-solid fa-tower-broadcast text-[11px]"></i> GPS & Alerts
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Radical Transparency</h3>
-                        <p class="text-secondary-text text-sm">Families deserve to know where their loved ones are. We provide live GPS tracking, instant alerts, and fully transparent, flat-rate pricing.</p>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <h3 class="text-xl font-bold text-primary-text mb-3">Radical Transparency</h3>
+                            <p class="text-secondary-text text-sm flex-grow">Families deserve to know where their loved ones are. We provide live GPS tracking, instant alerts, and fully transparent, flat-rate pricing.</p>
+                        </div>
                     </div>
 
                     <!-- Value 4 -->
-                    <div class="bg-card p-8 rounded-2xl border border-border shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 text-accent rounded-xl flex items-center justify-center text-2xl mb-6">
-                            <i class="fa-solid fa-person-walking"></i>
+                    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="assets/c4.jpg" alt="Preserving Dignity and Social Independence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/90 text-white text-xs font-semibold backdrop-blur-sm">
+                                <i class="fa-solid fa-person-walking text-[11px]"></i> Independence
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-primary-text mb-3">Preserving Dignity</h3>
-                        <p class="text-secondary-text text-sm">Aging shouldn't mean isolation. We facilitate independence by making social outings, errands, and medical care accessible and dignified.</p>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <h3 class="text-xl font-bold text-primary-text mb-3">Preserving Dignity</h3>
+                            <p class="text-secondary-text text-sm flex-grow">Aging shouldn't mean isolation. We facilitate independence by making social outings, errands, and medical care accessible and dignified.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -495,7 +525,7 @@
                     <a href="signup.html" class="btn-cta-white text-lg px-8 py-3 w-full sm:w-auto shadow-lg">
                         Create Family Account
                     </a>
-                    <a href="contact.html" class="bg-transparent border-2 border-white/40 text-white hover:bg-white/10 hover:border-white transition-all duration-300 font-bold px-8 py-3 rounded-lg w-full sm:w-auto">
+                    <a href="contact.html" class="bg-transparent border-2 border-white/40 text-white hover:bg-white/10 hover:border-white transition-all duration-300 font-bold px-8 py-3 rounded-xl w-full sm:w-auto text-center">
                         Contact Our Office
                     </a>
                 </div>
